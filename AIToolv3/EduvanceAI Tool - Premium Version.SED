@@ -1,0 +1,41 @@
+[Version]
+Class=IEXPRESS
+SEDVersion=3
+[Options]
+PackagePurpose=InstallApp
+ShowInstallProgramWindow=0
+HideExtractAnimation=1
+UseLongFileName=0
+InsideCompressed=0
+CAB_FixedSize=0
+CAB_ResvCodeSigning=0
+RebootMode=N
+InstallPrompt=%InstallPrompt%
+DisplayLicense=%DisplayLicense%
+FinishMessage=%FinishMessage%
+TargetName=%TargetName%
+FriendlyName=%FriendlyName%
+AppLaunched=%AppLaunched%
+PostInstallCmd=%PostInstallCmd%
+AdminQuietInstCmd=%AdminQuietInstCmd%
+UserQuietInstCmd=%UserQuietInstCmd%
+SourceFiles=SourceFiles
+[Strings]
+InstallPrompt=
+DisplayLicense=
+FinishMessage=
+TargetName=C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\AIToolv3\EduvanceAI Tool - Premium Version.EXE
+FriendlyName=EduvanceAI Tool - Premium Version
+AppLaunched=cmd.exe /c setup.bat
+PostInstallCmd=<None>
+AdminQuietInstCmd=
+UserQuietInstCmd=
+FILE0="AIToolv3.exe"
+FILE1="python36.exe"
+FILE2="setup.bat"
+[SourceFiles]
+SourceFiles0=C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\AIToolv3\Debug\
+[SourceFiles0]
+%FILE0%=
+%FILE1%=
+%FILE2%=
