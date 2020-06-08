@@ -43,7 +43,7 @@ namespace MachineLearningToolv3
 
             InitializeComponent();
 
-
+            filenametest.Text = "";
 
             initials();
             //SetDoubleBuffered(tableLayoutPanel1);
@@ -211,44 +211,44 @@ namespace MachineLearningToolv3
                         {
                             test_OLS();
 
-                            start.Arguments = string.Format(@"/C "  + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " LinearRegression_Test.py " + "-i " + String.Join(",", featureslabels));
+                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/LinearRegression_Test.py " + "-i " + String.Join(",", featureslabels));
                             Console.WriteLine(start.Arguments);
                             Console.WriteLine(MachineLearningToolv3.MLTool.datafilename);
                         }
                         else if (fileEntries[0] == Application.StartupPath + "/SGD.pkl")
                         {
                             test_SGD();
-                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " SGD_Test.py " + "-i " + String.Join(",", featureslabels));
+                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/SGD_Test.py " + "-i " + String.Join(",", featureslabels));
                             Console.WriteLine(start.Arguments);
                         }
                         else if (fileEntries[0] == Application.StartupPath + "/DTR.pkl")
                         {
                             test_DTR();
-                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " DTR_Test.py " + "-i " + String.Join(",", featureslabels));
+                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/DTR_Test.py " + "-i " + String.Join(",", featureslabels));
                             Console.WriteLine(start.Arguments);
                         }
                         else if (fileEntries[0] == Application.StartupPath + "/RFR.pkl")
                         {
                             test_RFR();
-                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " RFR_Test.py " + "-i " + String.Join(",", featureslabels));
+                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/RFR_Test.py " + "-i " + String.Join(",", featureslabels));
                             Console.WriteLine(start.Arguments);
                         }
                         else if (fileEntries[0] == Application.StartupPath + "/Perceptron.pkl")
                         {
                             test_perceptron();
-                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " Perceptron_Test.py " + "-i " + String.Join(",", featureslabels));
+                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/Perceptron_Test.py " + "-i " + String.Join(",", featureslabels));
                             Console.WriteLine(start.Arguments);
                         }
                         else if (fileEntries[0] == Application.StartupPath + "/DTC.pkl")
                         {
                             test_DTC();
-                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " DTC_Test.py " + "-i " + String.Join(",", featureslabels));
+                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/DTC_Test.py " + "-i " + String.Join(",", featureslabels));
                             Console.WriteLine(start.Arguments);
                         }
                         else if (fileEntries[0] == Application.StartupPath + "/RFC.pkl")
                         {
                             test_RFC();
-                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " RFC_Test.py " + "-i " + String.Join(",", featureslabels));
+                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/RFC_Test.py " + "-i " + String.Join(",", featureslabels));
                             Console.WriteLine(start.Arguments);
                         }
 
@@ -381,6 +381,10 @@ namespace MachineLearningToolv3
                             System.IO.File.Delete(Application.StartupPath + @"/Perceptron_Test" + ".py");
                             System.IO.File.Delete(Application.StartupPath + @"/DTC_Test" + ".py");
                             System.IO.File.Delete(Application.StartupPath + @"/RFC_Test" + ".py");
+
+
+
+
                             //System.IO.File.Delete(Application.StartupPath + @"/RFC_Test" + ".py");
                         }
                         catch
@@ -397,18 +401,21 @@ namespace MachineLearningToolv3
 
         private void bunifuThinButton21_Click(object sender, EventArgs e)
         {
-            this.Close();
-            this.Dispose();
             try
             {
-                System.IO.File.Delete(Application.StartupPath + @"/currentPdfs/currentML_report.pdf");
-                Directory.Delete(Application.StartupPath + @"/currentPdfs");
-                System.IO.File.Delete(Application.StartupPath + @"/test_output.txt");
+                //System.IO.File.Delete(Application.StartupPath + @"/currentPdfs/currentML_report.pdf");
+                //Directory.Delete(Application.StartupPath + @"/currentPdfs");
+                //System.IO.File.Delete(Application.StartupPath + @"/test_output.txt");
+                System.IO.File.Delete(Application.StartupPath + @"/output.csv");
+                System.IO.File.Delete(Application.StartupPath + @"/" + testfile);
             }
             catch
             {
 
             }
+            this.Close();
+            this.Dispose();
+            
         }
 
         private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
@@ -511,11 +518,14 @@ namespace MachineLearningToolv3
                     icheckboxlist[i].Region = System.Drawing.Region.FromHrgn(ptr1);
                     DeleteObject(ptr1);
                 }
-
+                SetDoubleBuffered(tableLayoutPanel7);
+               // SetDoubleBuffered(tableLayoutPanel6);
+                SetDoubleBuffered(tableLayoutPanel8);
                 SetDoubleBuffered(tableLayoutPanel1);
                 SetDoubleBuffered(tableLayoutPanel3);
                 SetDoubleBuffered(tableLayoutPanel5);
                 SetDoubleBuffered(flowLayoutPanel1);
+                SetDoubleBuffered(flowLayoutPanel2);
                 SetDoubleBuffered(inputpanels);
                 SetDoubleBuffered(inputpanel);
                 SetDoubleBuffered(predictionpanels);
@@ -561,6 +571,515 @@ namespace MachineLearningToolv3
         private void Test_FormClosing(object sender, FormClosingEventArgs e)
         {
            // this.Close();
+        }
+        public string testfilename;
+        public string testfile;
+        private void uploadcsvbutton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //System.IO.File.Delete(Application.StartupPath + @"/currentPdfs/currentML_report.pdf");
+                //Directory.Delete(Application.StartupPath + @"/currentPdfs");
+                //System.IO.File.Delete(Application.StartupPath + @"/test_output.txt");
+                System.IO.File.Delete(Application.StartupPath + @"/output.csv");
+                System.IO.File.Delete(Application.StartupPath + @"/" + testfile);
+                filenametest.Text = "";
+                predictbulk.ActiveFillColor = SystemColors.ActiveCaption;
+                predictbulk.ActiveLineColor = Color.White;
+                predictbulk.IdleForecolor = Color.White;
+                predictbulk.IdleLineColor = Color.White;
+                predictbulk.IdleFillColor = SystemColors.ActiveCaption;
+
+                savebutton.ActiveFillColor = SystemColors.ActiveCaption;
+                savebutton.ActiveLineColor = Color.White;
+                savebutton.IdleForecolor = Color.White;
+                savebutton.IdleLineColor = Color.White;
+                savebutton.IdleFillColor = SystemColors.ActiveCaption;
+            }
+            catch
+            {
+
+            }
+
+            System.Windows.Forms.OpenFileDialog openfiledialog3 = new System.Windows.Forms.OpenFileDialog();
+            Console.WriteLine("opens filedialog");
+            openfiledialog3.ShowHelp = true;
+            openfiledialog3.Filter = "Data files (*.csv) |*.csv;";
+
+            DialogResult result = openfiledialog3.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                testfilename = openfiledialog3.FileName;
+                testfile = openfiledialog3.SafeFileName;
+                Console.WriteLine("minus 2");
+                string exte = Path.GetExtension(openfiledialog3.FileName);
+                Console.WriteLine(testfilename);
+                var fileInfo = new FileInfo(testfilename);
+                var size = (int)(Convert.ToDecimal(fileInfo.Length) / 1024) + 1;
+
+
+                if (size > 500000)
+                {
+
+                    filenametest.Text = "";
+                    MessageBox.Show("Max value of file is exceeding beyond 500 MB");
+
+                }
+                else
+                {
+                    filenametest.Text = openfiledialog3.SafeFileName + " (" + size + " kb)";
+                    try
+                    {
+                        Console.WriteLine(testfile);
+                        predictbulk.ActiveFillColor = Color.Green;
+                        predictbulk.ActiveLineColor = Color.White;
+                        predictbulk.IdleForecolor = Color.White;
+                        predictbulk.IdleLineColor = Color.White;
+                        predictbulk.IdleFillColor = Color.Green;
+
+                        System.IO.File.Copy(testfilename, Application.StartupPath + @"/" + testfile, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                   // sample();
+                }
+            }
+            else
+            {
+                try
+                {
+                    //System.IO.File.Delete(Application.StartupPath + @"/currentPdfs/currentML_report.pdf");
+                    //Directory.Delete(Application.StartupPath + @"/currentPdfs");
+                    //System.IO.File.Delete(Application.StartupPath + @"/test_output.txt");
+                    System.IO.File.Delete(Application.StartupPath + @"/output.csv");
+                    //System.IO.File.Delete(Application.StartupPath + @"/" + testfile);
+                }
+                catch
+                {
+
+                }
+            }
+        }
+        public void sample()
+        {
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.WindowStyle = ProcessWindowStyle.Hidden;
+            start.CreateNoWindow = true;
+            start.UseShellExecute = false;
+            start.FileName = Environment.SystemDirectory + @"\cmd.exe";
+
+
+            string[] fileEntries = Directory.GetFiles(Application.StartupPath + "/", "*.pkl");
+
+
+            if (fileEntries[0] == Application.StartupPath + @"/LinearRegression.pkl")
+            {
+                create_OLStestcsv();
+
+                start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/olstestcsv.py");
+                Console.WriteLine(start.Arguments);
+                Console.WriteLine(MachineLearningToolv3.MLTool.datafilename);
+            }
+            else if (fileEntries[0] == Application.StartupPath + @"/SGD.pkl")
+            {
+                create_SGDtestcsv();
+                start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/sgdtestcsv.py");
+                Console.WriteLine(start.Arguments);
+            }
+            else if (fileEntries[0] == Application.StartupPath + @"/DTR.pkl")
+            {
+                create_DTRtestcsv();
+                start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/dtrtestcsv.py");
+                Console.WriteLine(start.Arguments);
+            }
+            else if (fileEntries[0] == Application.StartupPath + @"/RFR.pkl")
+            {
+                create_RFRtestcsv();
+                start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/rfrtestcsv.py");
+                Console.WriteLine(start.Arguments);
+            }
+            else if (fileEntries[0] == Application.StartupPath + "/Perceptron.pkl")
+            {
+                create_Perceptrontestcsv();
+                start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/Perceptrontestcsv.py");
+                Console.WriteLine(start.Arguments);
+            }
+            else if (fileEntries[0] == Application.StartupPath + "/DTC.pkl")
+            {
+                create_dtctestcsv();
+                start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/dtctestcsv.py");
+                Console.WriteLine(start.Arguments);
+            }
+            else if (fileEntries[0] == Application.StartupPath + "/RFC.pkl")
+            {
+                create_rfctestcsv();
+                start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath + @"/rfctestcsv.py");
+                Console.WriteLine(start.Arguments);
+            }
+
+            start.RedirectStandardOutput = true;
+
+            using (Process process = Process.Start(start))
+            {
+                //Console.Write("result");
+                
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string result1 = reader.ReadToEnd();
+                    Console.WriteLine(result1);
+                    if(File.Exists(Application.StartupPath + @"/output.csv"))
+                    {
+                        predictbulk.ActiveFillColor = SystemColors.ActiveCaption;
+                        predictbulk.ActiveLineColor = Color.White;
+                        predictbulk.IdleForecolor = Color.White;
+                        predictbulk.IdleLineColor = Color.White;
+                        predictbulk.IdleFillColor = SystemColors.ActiveCaption;
+
+
+                        savebutton.ActiveFillColor = Color.Green;
+                        savebutton.ActiveLineColor = Color.White;
+                        savebutton.IdleForecolor = Color.White;
+                        savebutton.IdleLineColor = Color.White;
+                        savebutton.IdleFillColor = Color.Green;
+                    }
+                    else
+                    {
+                        filenametest.Text = "";
+                        MessageBox.Show("uploaded csv file is not in correct format");
+                        predictbulk.ActiveFillColor = SystemColors.ActiveCaption;
+                        predictbulk.ActiveLineColor = Color.White;
+                        predictbulk.IdleForecolor = Color.White;
+                        predictbulk.IdleLineColor = Color.White;
+                        predictbulk.IdleFillColor = SystemColors.ActiveCaption;
+
+                        savebutton.ActiveFillColor = SystemColors.ActiveCaption;
+                        savebutton.ActiveLineColor = Color.White;
+                        savebutton.IdleForecolor = Color.White;
+                        savebutton.IdleLineColor = Color.White;
+                        savebutton.IdleFillColor = SystemColors.ActiveCaption;
+
+                    }
+
+                    System.IO.File.Delete(Application.StartupPath + @"/olstestcsv" + ".py");
+                    System.IO.File.Delete(Application.StartupPath + @"/sgdtestcsv" + ".py");
+                    System.IO.File.Delete(Application.StartupPath + @"/dtrtestcsv" + ".py");
+                    System.IO.File.Delete(Application.StartupPath + @"/rfrtestcsv" + ".py");
+                    System.IO.File.Delete(Application.StartupPath + @"/Perceptrontestcsv" + ".py");
+                    System.IO.File.Delete(Application.StartupPath + @"/dtctestcsv" + ".py");
+                    System.IO.File.Delete(Application.StartupPath + @"/rfctestcsv" + ".py");
+                }
+            }
+        }
+        public void create_OLStestcsv()
+        {
+            string default_olstestcsv = @"import pickle
+import sys
+import getopt
+import numpy as np
+import pandas as pd
+
+pkl_filename = r""" + Application.StartupPath + @"/LinearRegression.pkl""
+with open(pkl_filename, 'rb') as file:
+    pickle_model = pickle.load(file)
+
+inputvalue = []
+newinputvalues = []
+output = []
+df = pd.read_csv(r""" + testfilename + @""")
+
+for i in range((df.shape[0])): 
+    inputvalue.append(list(df.iloc[i, :]))
+
+
+for i in inputvalue:
+    Ypredict = pickle_model.predict([i])
+    output.append(Ypredict[0][0])
+
+df['Output'] = pd.Series(output, index = df.index)
+
+df.to_csv(r""" + Application.StartupPath + @"/output.csv"", index = False)";
+            string from = Application.StartupPath + @"/olstestcsv.py";
+            using (StreamWriter file = new StreamWriter(from))
+            {
+
+                file.WriteLine(default_olstestcsv);
+
+            }
+
+
+
+        }
+        public void create_SGDtestcsv()
+        {
+            string default_sgdtestcsv = @"import pickle
+import sys
+import getopt
+import numpy as np
+import pandas as pd
+
+pkl_filename = r""" + Application.StartupPath + @"/SGD.pkl""
+with open(pkl_filename, 'rb') as file:
+    pickle_model = pickle.load(file)
+
+inputvalue = []
+newinputvalues = []
+output = []
+df = pd.read_csv(r""" + testfilename + @""")
+
+for i in range((df.shape[0])): 
+    inputvalue.append(list(df.iloc[i, :]))
+
+
+for i in inputvalue:
+    Ypredict = pickle_model.predict([i])
+    output.append(Ypredict[0])
+
+df['Output'] = pd.Series(output, index = df.index)
+
+df.to_csv(r""" + Application.StartupPath + @"/output.csv"", index = False)";
+            string from = Application.StartupPath + @"/sgdtestcsv.py";
+            using (StreamWriter file = new StreamWriter(from))
+            {
+
+                file.WriteLine(default_sgdtestcsv);
+
+            }
+        }
+
+        public void create_DTRtestcsv()
+        {
+            string default_dtrtestcsv = @"import pickle
+import sys
+import getopt
+import numpy as np
+import pandas as pd
+
+pkl_filename = r""" + Application.StartupPath + @"/DTR.pkl""
+with open(pkl_filename, 'rb') as file:
+    pickle_model = pickle.load(file)
+
+inputvalue = []
+newinputvalues = []
+output = []
+df = pd.read_csv(r""" + testfilename + @""")
+
+for i in range((df.shape[0])): 
+    inputvalue.append(list(df.iloc[i, :]))
+
+
+for i in inputvalue:
+    Ypredict = pickle_model.predict([i])
+    output.append(Ypredict[0])
+
+df['Output'] = pd.Series(output, index = df.index)
+
+df.to_csv(r""" + Application.StartupPath + @"/output.csv"", index = False)";
+            string from = Application.StartupPath + @"/dtrtestcsv.py";
+            using (StreamWriter file = new StreamWriter(from))
+            {
+
+                file.WriteLine(default_dtrtestcsv);
+
+            }
+        }
+
+
+        public void create_RFRtestcsv()
+        {
+            string default_rfrtestcsv = @"import pickle
+import sys
+import getopt
+import numpy as np
+import pandas as pd
+
+pkl_filename = r""" + Application.StartupPath + @"/RFR.pkl""
+with open(pkl_filename, 'rb') as file:
+    pickle_model = pickle.load(file)
+
+inputvalue = []
+newinputvalues = []
+output = []
+df = pd.read_csv(r""" + testfilename + @""")
+
+for i in range((df.shape[0])): 
+    inputvalue.append(list(df.iloc[i, :]))
+
+
+for i in inputvalue:
+    Ypredict = pickle_model.predict([i])
+    output.append(Ypredict[0])
+
+df['Output'] = pd.Series(output, index = df.index)
+
+df.to_csv(r""" + Application.StartupPath + @"/output.csv"", index = False)";
+            string from = Application.StartupPath + @"/rfrtestcsv.py";
+            using (StreamWriter file = new StreamWriter(from))
+            {
+
+                file.WriteLine(default_rfrtestcsv);
+
+            }
+        }
+
+
+        public void create_Perceptrontestcsv()
+        {
+            string default_perceptrontestcsv = @"import pickle
+import sys
+import getopt
+import numpy as np
+import pandas as pd
+
+pkl_filename = r""" + Application.StartupPath + @"/Perceptron.pkl""
+with open(pkl_filename, 'rb') as file:
+    pickle_model = pickle.load(file)
+
+inputvalue = []
+newinputvalues = []
+output = []
+df = pd.read_csv(r""" + testfilename + @""")
+
+for i in range((df.shape[0])): 
+    inputvalue.append(list(df.iloc[i, :]))
+
+
+for i in inputvalue:
+    Ypredict = pickle_model.predict([i])
+    output.append(Ypredict[0])
+
+df['Output'] = pd.Series(output, index = df.index)
+
+df.to_csv(r""" + Application.StartupPath + @"/output.csv"", index = False)";
+            string from = Application.StartupPath + @"/Perceptrontestcsv.py";
+            using (StreamWriter file = new StreamWriter(from))
+            {
+
+                file.WriteLine(default_perceptrontestcsv);
+
+            }
+        }
+
+
+
+
+
+        public void create_dtctestcsv()
+        {
+            string default_dtctestcsv = @"import pickle
+import sys
+import getopt
+import numpy as np
+import pandas as pd
+
+pkl_filename = r""" + Application.StartupPath + @"/DTC.pkl""
+with open(pkl_filename, 'rb') as file:
+    pickle_model = pickle.load(file)
+
+inputvalue = []
+newinputvalues = []
+output = []
+df = pd.read_csv(r""" + testfilename + @""")
+
+for i in range((df.shape[0])): 
+    inputvalue.append(list(df.iloc[i, :]))
+
+
+for i in inputvalue:
+    Ypredict = pickle_model.predict([i])
+    output.append(Ypredict[0])
+
+df['Output'] = pd.Series(output, index = df.index)
+
+df.to_csv(r""" + Application.StartupPath + @"/output.csv"", index = False)";
+            string from = Application.StartupPath + @"/dtctestcsv.py";
+            using (StreamWriter file = new StreamWriter(from))
+            {
+
+                file.WriteLine(default_dtctestcsv);
+
+            }
+        }
+
+        public void create_rfctestcsv()
+        {
+            string default_rfctestcsv = @"import pickle
+import sys
+import getopt
+import numpy as np
+import pandas as pd
+
+pkl_filename = r""" + Application.StartupPath + @"/RFC.pkl""
+with open(pkl_filename, 'rb') as file:
+    pickle_model = pickle.load(file)
+
+inputvalue = []
+newinputvalues = []
+output = []
+df = pd.read_csv(r""" + testfilename + @""")
+
+for i in range((df.shape[0])): 
+    inputvalue.append(list(df.iloc[i, :]))
+
+
+for i in inputvalue:
+    Ypredict = pickle_model.predict([i])
+    output.append(Ypredict[0])
+
+df['Output'] = pd.Series(output, index = df.index)
+
+df.to_csv(r""" + Application.StartupPath + @"/output.csv"", index = False)";
+            string from = Application.StartupPath + @"/rfctestcsv.py";
+            using (StreamWriter file = new StreamWriter(from))
+            {
+
+                file.WriteLine(default_rfctestcsv);
+
+            }
+        }
+
+        private void savebutton_Click(object sender, EventArgs e)
+        {
+            if(File.Exists(Application.StartupPath + @"/output.csv"))
+            {
+                System.Windows.Forms.SaveFileDialog savefiledialog3 = new System.Windows.Forms.SaveFileDialog();
+                Console.WriteLine("opens savefiledialog");
+                savefiledialog3.ShowHelp = true;
+                savefiledialog3.Filter = "Data files (*.csv) |*.csv;";
+
+                DialogResult result = savefiledialog3.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    System.IO.File.Copy(Application.StartupPath + @"/output.csv", savefiledialog3.FileName, true);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Output file not generated");
+            }
+            
+        }
+
+        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+            flowLayoutPanel2.BackColor = Color.FromArgb(80, Color.Black);
+            System.IntPtr ptr = CreateRoundRectRgn(0, 0, flowLayoutPanel2.Width, flowLayoutPanel2.Height, 30, 30); // _BoarderRaduis can be adjusted to your needs, try 15 to start.
+            flowLayoutPanel2.Region = System.Drawing.Region.FromHrgn(ptr);
+            DeleteObject(ptr);
+        }
+
+        private void predictbulk_Click(object sender, EventArgs e)
+        {
+            if (filenametest.Text != string.Empty)
+            {
+                sample();
+            }
+            else
+            {
+                MessageBox.Show("Select test data file");
+            }
+            
         }
 
         public void create_currentpdfreport()
@@ -822,7 +1341,7 @@ import sys
 import getopt
 import numpy as np
 import pandas as pd
-pkl_filename = ""LinearRegression.pkl""
+pkl_filename = r""" + Application.StartupPath + @"/LinearRegression.pkl""
 with open(pkl_filename, 'rb') as file:
     pickle_model = pickle.load(file)
 
@@ -860,7 +1379,7 @@ def main(argv):
                     break
              else:
                 if (""could not convert string to float: "" == str(e)[:35]):
-                    df = pd.read_csv(r"""+ MachineLearningToolv3.MLTool.datafilename +@""")
+                    df = pd.read_csv(r""" + MachineLearningToolv3.MLTool.datafilename +@""")
                     df = df.dropna()
                     stringname = str(e)[35:]
                     first = stringname[1:]
@@ -970,7 +1489,7 @@ import sys
 import getopt
 import numpy as np
 import pandas as pd
-pkl_filename = ""SGD.pkl""
+pkl_filename = r""" + Application.StartupPath + @"/SGD.pkl""
 with open(pkl_filename, 'rb') as file:
     pickle_model = pickle.load(file)
 
@@ -1007,7 +1526,7 @@ def main(argv):
                     break
              else:
                 if (""could not convert string to float: "" == str(e)[:35]):
-                    df = pd.read_csv(r"""+ MachineLearningToolv3.MLTool.datafilename +@""")
+                    df = pd.read_csv(r""" + MachineLearningToolv3.MLTool.datafilename +@""")
                     df = df.dropna()
                     stringname = str(e)[35:]
                     first = stringname[1:]
@@ -1113,7 +1632,7 @@ import sys
 import getopt
 import numpy as np
 import pandas as pd
-pkl_filename = ""DTR.pkl""
+pkl_filename = r""" + Application.StartupPath + @"/DTR.pkl""
 with open(pkl_filename, 'rb') as file:
     pickle_model = pickle.load(file)
 
@@ -1149,7 +1668,7 @@ def main(argv):
                     break
              else:
                 if (""could not convert string to float: "" == str(e)[:35]):
-                    df = pd.read_csv(r"""+ MachineLearningToolv3.MLTool.datafilename +@""")
+                    df = pd.read_csv(r""" + MachineLearningToolv3.MLTool.datafilename +@""")
                     df = df.dropna()
                     stringname = str(e)[35:]
                     first = stringname[1:]
@@ -1257,7 +1776,7 @@ import sys
 import getopt
 import numpy as np
 import pandas as pd
-pkl_filename = ""RFR.pkl""
+pkl_filename = r""" + Application.StartupPath + @"/RFR.pkl""
 with open(pkl_filename, 'rb') as file:
     pickle_model = pickle.load(file)
 
@@ -1293,7 +1812,7 @@ def main(argv):
                     break
              else:
                 if (""could not convert string to float: "" == str(e)[:35]):
-                    df = pd.read_csv(r"""+ MachineLearningToolv3.MLTool.datafilename +@""")
+                    df = pd.read_csv(r""" + MachineLearningToolv3.MLTool.datafilename +@""")
                     df = df.dropna()
                     stringname = str(e)[35:]
                     first = stringname[1:]
@@ -1402,7 +1921,7 @@ import sys
 import getopt
 import numpy as np
 import pandas as pd
-pkl_filename = ""Perceptron.pkl""
+pkl_filename = r""" + Application.StartupPath + @"/Perceptron.pkl""
 with open(pkl_filename, 'rb') as file:
     pickle_model = pickle.load(file)
 
@@ -1438,7 +1957,7 @@ def main(argv):
                     break
              else:
                 if (""could not convert string to float: "" == str(e)[:35]):
-                    df = pd.read_csv(r"""+ MachineLearningToolv3.MLTool.datafilename +@""")
+                    df = pd.read_csv(r""" + MachineLearningToolv3.MLTool.datafilename +@""")
                     df = df.dropna()
                     stringname = str(e)[35:]
                     first = stringname[1:]
@@ -1547,7 +2066,7 @@ import sys
 import getopt
 import numpy as np
 import pandas as pd
-pkl_filename = ""DTC.pkl""
+pkl_filename = r""" + Application.StartupPath + @"/DTC.pkl""
 with open(pkl_filename, 'rb') as file:
     pickle_model = pickle.load(file)
 
@@ -1583,7 +2102,7 @@ def main(argv):
                     break
              else:
                 if (""could not convert string to float: "" == str(e)[:35]):
-                    df = pd.read_csv(r"""+ MachineLearningToolv3.MLTool.datafilename +@""")
+                    df = pd.read_csv(r""" + MachineLearningToolv3.MLTool.datafilename +@""")
                     df = df.dropna()
                     stringname = str(e)[35:]
                     first = stringname[1:]
@@ -1691,7 +2210,7 @@ import sys
 import getopt
 import numpy as np
 import pandas as pd
-pkl_filename = ""RFC.pkl""
+pkl_filename = r""" + Application.StartupPath + @"/RFC.pkl""
 with open(pkl_filename, 'rb') as file:
     pickle_model = pickle.load(file)
 

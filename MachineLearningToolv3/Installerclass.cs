@@ -88,6 +88,8 @@ namespace MachineLearningToolv3
                     System.IO.File.Delete(path + @"/Pdfs/ML_report.pdf");
                     Directory.Delete(path + @"/Pdfs");
                     // System.IO.File.Delete(Application.StartupPath + @"/test_output.txt");
+                    System.IO.File.Delete(Environment.GetEnvironmentVariable("windir") + @"/locred.dat");
+                    System.IO.File.Delete(Environment.GetEnvironmentVariable("windir") + @"/locredo.dat");
                     System.IO.File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\mltool001.dbf");
 
                 }
@@ -98,6 +100,8 @@ namespace MachineLearningToolv3
                 try
                 {
                     System.IO.File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\mltool001.dbf");
+                    System.IO.File.Delete(Environment.GetEnvironmentVariable("windir") + @"/locred.dat");
+                    System.IO.File.Delete(Environment.GetEnvironmentVariable("windir") + @"/locredo.dat");
 
                     System.IO.DirectoryInfo di = new DirectoryInfo(path + @"\root");
 

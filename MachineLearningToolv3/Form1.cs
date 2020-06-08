@@ -28,9 +28,13 @@ using System.Text.RegularExpressions;
 using System.Net.Cache;
 using System.Globalization;
 using LumenWorks.Framework.IO.Csv;
-using SoftwareLocker;
+//using SoftwareLocker;
 using System.Security.Authentication.ExtendedProtection;
 using System.IO.Compression;
+using Ionic.Zip;
+using ZipFile = Ionic.Zip.ZipFile;
+using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 
 namespace MachineLearningToolv3
 {
@@ -71,6 +75,8 @@ namespace MachineLearningToolv3
         public static string modelname;
         public static string[] mystring;
         public static List<string> columns;
+        public static List<string> zipfolders = new List<string>();
+        public static List<string> zipcheckfolders = new List<string>();
         public Thread test_trd;
         public Thread cnntest_trd;
         public Thread trd;
@@ -85,9 +91,11 @@ namespace MachineLearningToolv3
         public static List<string> choosealgo = new List<string>();
         public static List<string> feat = new List<string>();
         public static Bunifu.Framework.UI.BunifuCheckbox o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15, o16, o17, o18, o19, o20, o21, o22, o23, o24, o25, o26, o27, o28, o29, o30;
+        public static Bunifu.Framework.UI.BunifuCheckbox z1, z2, z3, z4, z5, z6, z7, z8, z9, z10, z11, z12, z13, z14, z15, z16, z17, z18, z19, z20, z21, z22, z23, z24, z25, z26, z27, z28, z29, z30;
         public static Bunifu.Framework.UI.BunifuCheckbox i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29, i30;
         public List<Bunifu.Framework.UI.BunifuCheckbox> icheckboxlist = new List<Bunifu.Framework.UI.BunifuCheckbox> { i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29, i30 };
         public List<Bunifu.Framework.UI.BunifuCheckbox> ocheckboxlist = new List<Bunifu.Framework.UI.BunifuCheckbox> { o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13, o14, o15, o16, o17, o18, o19, o20, o21, o22, o23, o24, o25, o26, o27, o28, o29, o30 };
+        public List<Bunifu.Framework.UI.BunifuCheckbox> zcheckboxlist = new List<Bunifu.Framework.UI.BunifuCheckbox> { z1, z2, z3, z4, z5, z6, z7, z8, z9, z10, z11, z12, z13, z14, z15, z16, z17, z18, z19, z20, z21, z22, z23, z24, z25, z26, z27, z28, z29, z30 };
         public static Label l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24, l25, l26, l27, l28, l29, l30;
         public List<Label> labellist = new List<Label> { l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24, l25, l26, l27, l28, l29, l30 };
         public string licfile = Application.StartupPath + "\\mltool001.reg";
@@ -103,13 +111,69 @@ namespace MachineLearningToolv3
         public static string pippath;
         //public static string fullpath;
         public static string lab;
+        public string hwid;
+
+        private void maintablelayout_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+      
+        public void newscreen()
+        {
+            Application.Run(new MLTool());
+        }
+  
+
+        private void MLTool_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!File.Exists(Environment.GetEnvironmentVariable("windir") + @"/locred.dat"))
+            {
+                this.Hide();
+                Loginform fLogin = new Loginform();
+
+                if (fLogin.ShowDialog() == DialogResult.OK)
+                {
+                    Thread newsplash = new Thread(new ThreadStart(newscreen));
+                    newsplash.SetApartmentState(ApartmentState.STA);
+                    newsplash.Start();
+                    fLogin.Dispose();
+                }
+                else
+                {
+                    Application.Exit();
+                }
+            }
+            else
+            {
+                Application.Exit();
+
+            }
+        }
+
+        private void logoutbutton_Click_1(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to Logout ?", "Message", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                //this.Hide();
+                System.IO.File.Delete(Environment.GetEnvironmentVariable("windir") + @"/locred.dat");
+                System.IO.File.Delete(Environment.GetEnvironmentVariable("windir") + @"/locredo.dat");
+                //Program.OpenDetailFormOnClose = true;
+                this.Close();
+                this.Dispose();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                Console.WriteLine("okay logout nai hoega fir fir fir");
+            }
+        }
 
         private void formrun()
         {
             Application.Run(new splashscreen());
         }
 
-
+        
       
 
         private void formRun1()
@@ -120,21 +184,27 @@ namespace MachineLearningToolv3
         {
 
 
-            //cnntest cnntest = new cnntest();
+            //Test cnntest = new Test();
             //this.Hide();
             //cnntest.ShowDialog();
             //cnntest = null;
             //this.Show();
 
+
+
+            InitializeComponent();
             Thread splash = new Thread(new ThreadStart(formrun));
             splash.Start();
             Thread.Sleep(5000);
             CheckForInternetConnection();
-            InitializeComponent();
+            
             splash.Abort();
 
 
-           
+          //  onopen();
+
+
+
             //Console.WriteLine(pypath.Substring(0, 54) + @"Scripts\pip3.6.exe");
 
             this.WindowState = FormWindowState.Maximized;
@@ -143,9 +213,9 @@ namespace MachineLearningToolv3
             Resolution objFormResizer = new Resolution();
             objFormResizer.ResizeForm(this, screenHeight, screenWidth);
 
-           datenowtime();
-           writelogfile();
-           validation();
+          // datenowtime();
+          // writelogfile();
+          //  validation();
 
             DateTime osStartTime = DateTime.Now - new TimeSpan(10000 * GetTickCount64());
             osstarttime = Convert.ToString(osStartTime);
@@ -302,7 +372,7 @@ namespace MachineLearningToolv3
 
 
             //bunifuThinButton22.Enabled = false;
-            (new Bunifu.Utils.DropShaddow()).ApplyShadows(this);
+          //  (new Bunifu.Utils.DropShaddow()).ApplyShadows(this);
             try
             {
                 System.IO.File.Delete(Application.StartupPath + @"/filedetails.json");
@@ -365,6 +435,18 @@ namespace MachineLearningToolv3
                     dir.Delete(true);
                 }
                 Directory.Delete(Application.StartupPath + @"\root");
+
+                System.IO.DirectoryInfo di1 = new DirectoryInfo(Application.StartupPath + @"\datafactory");
+
+                foreach (FileInfo file in di1.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di1.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+                Directory.Delete(Application.StartupPath + @"\datafactory");
             }
             catch
             {
@@ -650,7 +732,7 @@ namespace MachineLearningToolv3
                 {
                     DateTime creation = File.GetCreationTime(licfile);
                     Console.WriteLine("+++++");
-                    //Console.WriteLine(creation);
+                    Console.WriteLine(creation);
                     DateTime enddate = creation.AddDays(180);//add days 
                                                             // Console.WriteLine(enddate);
                     string one = internettodaydate.Substring(0, 2);
@@ -719,32 +801,7 @@ namespace MachineLearningToolv3
                 Console.WriteLine("License hai");
                 //this.Close();
             }
-            //       Trialmaker t = new Trialmaker("enblarpre",
-            //Application.StartupPath + "\\enb0112p.reg",
-            //Environment.GetFolderPath(Environment.SpecialFolder.System) +
-            //  "\\enb0112p.dbf",
-            //"E-mail: contact@eduvance.in",
-            //365, 100, "112");
-
-            //      byte[] MyOwnKey = { 97, 250,  1,  5,  84, 21,   7, 63,
-            //                   4,  54, 87, 56, 123, 10,   3, 62,
-            //                   7,   9, 20, 36,  37, 21, 101, 57};
-            //      t.TripleDESKey = MyOwnKey;
-            //      // if you don't call this part the program will
-            //      //use default key to encryption
-
-            //      Trialmaker.RunTypes RT = t.ShowDialog();
-            //      bool is_trial;
-            //      if (RT != Trialmaker.RunTypes.Expired)
-            //      {
-            //          if (RT == Trialmaker.RunTypes.Full)
-            //              is_trial = false;
-            //          else
-            //              is_trial = true;
-
-            //          Application.Exit();
-            //          Application.Restart();
-            //      }
+           
         }
 
         public void libraries() //object sender, DoWorkEventArgs e
@@ -753,7 +810,7 @@ namespace MachineLearningToolv3
             loadinglibraries.Start();
             //Thread.Sleep(10000);
             
-            //create_libinstall();
+           // create_libinstall();
             this.Hide();
             // this.Invoke((MethodInvoker)delegate () { 
             ProcessStartInfo start = new ProcessStartInfo();
@@ -762,7 +819,7 @@ namespace MachineLearningToolv3
             start.UseShellExecute = false;
             start.Verb = "runas";
             start.FileName = Environment.SystemDirectory + @"\cmd.exe";
-            // start.Arguments = string.Format(@"/C " + pypath + " " + Application.StartupPath + @"/Libinstall.py");
+            //start.Arguments = string.Format(@"/C " + pypath + " " + Application.StartupPath + @"/Libinstall.py");
             start.Arguments = string.Format(@"/C " + "\"" + @pippath + @"Scripts/pip3.6.exe" + "\"" + @" install python-docx==0.8.10 comtypes numpy matplotlib pandas sklearn seaborn tensorflow==2.0 keras pillow==7.1.0 opencv-python==4.2.0.34");
             start.RedirectStandardOutput = true;
 
@@ -1211,7 +1268,31 @@ namespace MachineLearningToolv3
 
 
         }
+        public void zipcheck()
+        {
+            foreach (Control c in input_panel1.Controls)
+            {
+                if ((c is Bunifu.Framework.UI.BunifuCheckbox) && ((Bunifu.Framework.UI.BunifuCheckbox)c).Checked)
+                {
+                    try
+                    {
+                        features.Add(zipfolders[Convert.ToInt32(c.Name)]);
+                        feat.Add(zipfolders[Convert.ToInt32(c.Name)]);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("null");
 
+                    }
+                }
+
+            }
+
+            
+
+
+           // return;
+        }
         public void check()
         {
             foreach (Control c in input_panel1.Controls)
@@ -1534,6 +1615,7 @@ namespace MachineLearningToolv3
 
         public void run_cmd(object sender, DoWorkEventArgs e)
         {
+            
             check();
             khatam = false;
             //this.Invoke((MethodInvoker)delegate () 
@@ -1800,6 +1882,7 @@ namespace MachineLearningToolv3
             //    start.Arguments = string.Format(@"/C " + pypath + " " + Application.StartupPath + @"/" + modelname + ".py ");
             //}
             //else
+
             //{
             //    start.Arguments = string.Format(@"/C " + pypath + " " + Application.StartupPath + @"/" + modelname + ".py " + "-d " + "r\"" + datafilename + "\"" + " -i " + "\"" +String.Join(",", features) + "\"" + " -o " + "\"" + String.Join(",", labels) + "\"" + " -s " + split / 100);
             //}
@@ -1818,6 +1901,8 @@ namespace MachineLearningToolv3
             }
 
             Console.WriteLine(start.Arguments);
+
+
             start.RedirectStandardOutput = true;
             var watch1 = System.Diagnostics.Stopwatch.StartNew();
             process.Exited += new EventHandler(cmd_Exited);
@@ -2082,7 +2167,85 @@ namespace MachineLearningToolv3
 
 
         }
+        public void onhoverzincheck(object sender, EventArgs e)
+        {
+            tableLayoutPanel10.Height = t10height;
+            IC.Height = p1height;
 
+            tableLayoutPanel22.Height = t22height;
+            RFR.Height = p7height;
+            DTR.Height = p8height;
+
+            tableLayoutPanel20.Height = t20height;
+            LinearRegression.Height = p6height;
+            SGD.Height = p5height;
+
+            tableLayoutPanel15.Height = t15height;
+            //tableLayoutPanel15.Update();
+            Perceptron.Height = p2height;
+            // pictureBox2.Update();
+
+            tableLayoutPanel17.Height = t17height;
+            //tableLayoutPanel17.Update();
+            RFC.Height = p3height;
+            //pictureBox3.Update();
+            DTC.Height = p4height;
+
+            choosealgo.Clear();
+            Console.WriteLine("choosealgoclear");
+
+            //Test_Button.ActiveFillColor = SystemColors.ActiveCaption;
+            //Test_Button.ActiveLineColor = Color.White;
+            //Test_Button.IdleForecolor = Color.White;
+            //Test_Button.IdleLineColor = Color.White;
+            //Test_Button.IdleFillColor = SystemColors.ActiveCaption;
+
+            //output.Text = "";
+            //confusionmatbox.Image = null;
+            //traintime.Text = "";
+
+            //run.ActiveFillColor = SystemColors.ActiveCaption;
+            //run.ActiveLineColor = Color.White;
+            //run.IdleForecolor = Color.White;
+            //run.IdleLineColor = Color.White;
+            //run.IdleFillColor = SystemColors.ActiveCaption;
+
+            ic_click = false;
+            linearregression_click = false;
+            sgd_click = false;
+            dtr_click = false;
+            rfr_click = false;
+            dtc_click = false;
+            rfc_click = false;
+            perceptron_click = false;
+
+
+
+            if (run.IdleFillColor == Color.Green)
+            {
+                Test_Button.ActiveFillColor = SystemColors.ActiveCaption;
+                Test_Button.ActiveLineColor = Color.White;
+                Test_Button.IdleForecolor = Color.White;
+                Test_Button.IdleLineColor = Color.White;
+                Test_Button.IdleFillColor = SystemColors.ActiveCaption;
+
+                output.Text = "";
+                confusionmatbox.Image = null;
+                traintime.Text = "";
+
+                run.ActiveFillColor = SystemColors.ActiveCaption;
+                run.ActiveLineColor = Color.White;
+                run.IdleForecolor = Color.White;
+                run.IdleLineColor = Color.White;
+                run.IdleFillColor = SystemColors.ActiveCaption;
+
+
+            }
+            else
+            {
+
+            }
+        }
         public void onhoverincheck(object sender, EventArgs e)
         {
             //label6.ForeColor = Color.DarkGray;
@@ -2154,6 +2317,166 @@ namespace MachineLearningToolv3
             {
 
             }
+        }
+        public bool flag;
+        public void createzipcheckboxes()
+        {
+            
+            int foldercount = 0;
+            zipfolders.Clear();
+            zipcheckfolders.Clear();
+            using (ZipArchive zip = System.IO.Compression.ZipFile.Open(datafilename, ZipArchiveMode.Read))
+            {
+
+                var listOfZipFolders = zip.Entries.Where(x => x.FullName.EndsWith("/")).ToList();
+                var listOfpngimgs = zip.Entries.Where(y => y.FullName.EndsWith(".png")).ToList();
+                var listOfjpgimgs = zip.Entries.Where(z => z.FullName.EndsWith(".jpg")).ToList();
+
+                foldercount = listOfZipFolders.Count;
+
+                Console.WriteLine(foldercount);
+                Console.WriteLine(listOfpngimgs.Count);
+                Console.WriteLine(listOfjpgimgs.Count);
+
+                if (foldercount == 0)
+                {
+                    flag = true;
+                }
+                else
+                {
+                    for (int i = 0; i < listOfZipFolders.Count; i++)
+                    {
+                        //Console.WriteLine(listOfZipFolders[i]);
+                        string folders = Convert.ToString(listOfZipFolders[i]);
+                        Console.WriteLine(folders);
+                        var count = folders.Count(x => x == '/');
+                        //var cnt = folders.Count(z => z == 'g');
+                        //Console.WriteLine(cnt);
+                        if (count == 0 || count > 1)
+                        {
+                            flag = true;
+                        }
+
+
+
+
+                        zipfolders.Add(Convert.ToString(listOfZipFolders[i]).Remove(Convert.ToString(listOfZipFolders[i]).Length - 1));
+                    }
+
+                }
+                
+                zip.Dispose();
+            }
+            if(flag == false)
+            {
+                int ypos = 10;
+                input_panel1.HorizontalScroll.Maximum = 0;
+                input_panel1.AutoScroll = false;
+                input_panel1.VerticalScroll.Visible = false;
+                input_panel1.AutoScroll = true;
+                //List<string> lstArray = mystring.ToList();
+                for (int i = 0; i < foldercount; i++)
+                {
+                    zcheckboxlist[i] = new Bunifu.Framework.UI.BunifuCheckbox();
+                    zcheckboxlist[i].Location = new Point(20, ypos);
+                    zcheckboxlist[i].Checked = false;
+                    zcheckboxlist[i].BackColor = Color.White;
+                    zcheckboxlist[i].ForeColor = Color.White;
+                    zcheckboxlist[i].ChechedOffColor = Color.White;
+                    zcheckboxlist[i].CheckedOnColor = Color.FromArgb(2, 70, 107);
+                    zcheckboxlist[i].Name = Convert.ToString(i);
+                    //checkboxlist[i].
+
+
+                    for (int j = 0; j < foldercount; j++)
+                    {
+                        labellist[j] = new Label();
+                        labellist[j].Location = new Point(50, ypos);
+                        labellist[j].Text = zipfolders[i];
+                        labellist[j].Size = new System.Drawing.Size(300, 22);
+                        labellist[j].Font = new System.Drawing.Font("Segoe UI", 12.0F, FontStyle.Regular);
+                        labellist[j].ForeColor = Color.Black;
+                        //Console.WriteLine(columns[i]);
+                    }
+
+
+
+
+                    input_panel1.Controls.Add(zcheckboxlist[i]);
+                    input_panel1.Controls.Add(labellist[i]);
+                    //outputpanel1.Controls.Add(checkboxlist[i]);
+                    //outputpanel1.Controls.Add(checkboxlist[i]);
+
+                    ypos += 32;
+                    //ocheckboxlist[i].OnChange += new EventHandler(chkcheckboxes);
+                    // ocheckboxlist[i].OnChange += new EventHandler(outputone);
+                    zcheckboxlist[i].OnChange += new EventHandler(onhoverzincheck);
+
+
+
+                }
+            }
+            else
+            {
+                flag = true;
+                filename.Text = "";
+
+                
+                
+                //ic_click = false;
+                //perceptron_click = false;
+                //rfc_click = false;
+                //dtc_click = false;
+                //linearregression_click = false;
+                //sgd_click = false;
+                //dtr_click = false;
+                //rfr_click = false;
+                //MessageBox.Show("The file is being used in another process");
+                Test_Button.ActiveFillColor = SystemColors.ActiveCaption;
+                Test_Button.ActiveLineColor = Color.White;
+                Test_Button.IdleForecolor = Color.White;
+                Test_Button.IdleLineColor = Color.White;
+                Test_Button.IdleFillColor = SystemColors.ActiveCaption;
+
+                output.Text = "";
+                confusionmatbox.Image = null;
+                traintime.Text = "";
+
+                run.ActiveFillColor = SystemColors.ActiveCaption;
+                run.ActiveLineColor = Color.White;
+                run.IdleForecolor = Color.White;
+                run.IdleLineColor = Color.White;
+                run.IdleFillColor = SystemColors.ActiveCaption;
+
+
+                tableLayoutPanel10.Height = t10height;
+                IC.Height = p1height;
+
+                tableLayoutPanel22.Height = t22height;
+                RFR.Height = p7height;
+                DTR.Height = p8height;
+
+                tableLayoutPanel20.Height = t20height;
+                LinearRegression.Height = p6height;
+                SGD.Height = p5height;
+
+                tableLayoutPanel15.Height = t15height;
+                //tableLayoutPanel15.Update();
+                Perceptron.Height = p2height;
+                // pictureBox2.Update();
+
+                tableLayoutPanel17.Height = t17height;
+                //tableLayoutPanel17.Update();
+                RFC.Height = p3height;
+                //pictureBox3.Update();
+                DTC.Height = p4height;
+
+                choosealgo.Clear();
+                Console.WriteLine("choosealgoclear2");
+                MessageBox.Show("Zip file is not in correct format");
+                //return;
+            }
+            
         }
         public void createcheckboxes1()
         {
@@ -2337,7 +2660,7 @@ namespace MachineLearningToolv3
             test.Text = bunifuSlider1.Value.ToString();
             train.Text = (100 - bunifuSlider1.Value).ToString();
         }
-        public int  one = 0;
+        public int  datafact = 0;
         public bool runner = false;
         private async void run_Click(object sender, EventArgs e)
         {
@@ -2345,18 +2668,215 @@ namespace MachineLearningToolv3
             //{
                 if (ext == ".zip")
                 {
+                    
+                    //zipcheck();
                     if (ic_click == true)
                     {
-                        if (filename.Text != string.Empty)
-                        {
-                            if (output.Text != string.Empty)
-                            {
+                        int z = 0;
 
-                                DialogResult dialogResult = MessageBox.Show("Do you want to run again ?", "Message", MessageBoxButtons.YesNo);
-                                if (dialogResult == DialogResult.Yes)
+                        foreach (Control c in input_panel1.Controls)
+                        {
+                           Bunifu.Framework.UI.BunifuCheckbox cb = c as Bunifu.Framework.UI.BunifuCheckbox;
+
+                          if (cb != null)
+                          {
+                            if (cb.Checked)
+                            {
+                              z = z + 1;
+
+                            }
+
+
+                          }
+
+                        }
+                        Console.WriteLine("Count_Features: " + i);
+                        if (z <= 1)
+                        {
+                            MessageBox.Show("Select atleast two inputs for your model");
+                        }
+                        else if (z > 1)
+                        {
+                            if (datafact >= 1)
+                            {
+                                string[] pathproject = Directory.GetFiles(Application.StartupPath, "*.zip");
+                                foreach (string filename in pathproject)
+                                {
+                                    System.IO.File.Delete(filename);
+
+                                }
+                                try
+                                {
+                                    System.IO.File.Copy(Application.StartupPath + @"\datafactory\" + datafile, Application.StartupPath + @"\" + datafile, true);
+                                    System.IO.File.Copy(datafilename, Application.StartupPath + @"\datafactory\" + datafile, true);
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("already copy");
+                                }
+
+                            }
+
+                            if (filename.Text != string.Empty)
+                            {
+                                if (output.Text != string.Empty)
                                 {
 
-                                    await Task.Delay(500);
+                                    DialogResult dialogResult = MessageBox.Show("Do you want to run again ?", "Message", MessageBoxButtons.YesNo);
+                                    if (dialogResult == DialogResult.Yes)
+                                    {
+
+                                        await Task.Delay(500);
+                                        this.Visible = false;
+                                        //Application.Run(new progress());
+
+                                        trd = new Thread(() =>
+                                        {
+                                            loadingscreen();
+
+                                        });
+
+                                        cmdtrd = new Thread(() =>
+                                        {
+
+                                            m_oWorker.RunWorkerAsync();
+                                        });
+
+
+                                        Parallel.Invoke(() =>
+                                        {
+                                            trd.Start();
+                                            //loadingscreen();
+                                        },
+                                        () => {
+                                            cmdtrd.Start();
+                                        });
+                                        //run.ActiveFillColor = SystemColors.ActiveCaption; //Color.FromArgb(2, 70, 107); SystemColors.ActiveCaption
+                                        //run.ActiveLineColor = Color.White;
+                                        //run.IdleForecolor = Color.White;
+                                        //run.IdleLineColor = Color.White;
+                                        //run.IdleFillColor = SystemColors.ActiveCaption;
+
+                                        //Test_Button.ActiveFillColor = SystemColors.ActiveCaption;
+                                        //Test_Button.ActiveLineColor = Color.White;
+                                        //Test_Button.IdleForecolor = Color.White;
+                                        //Test_Button.IdleLineColor = Color.White;
+                                        //Test_Button.IdleFillColor = SystemColors.ActiveCaption;
+
+                                        //output.Text = "";
+                                        //confusionmatbox.Image = null;
+                                        //traintime.Text = "";
+                                        //tableLayoutPanel10.Height = t10height;
+                                        //IC.Height = p1height;
+
+                                        //tableLayoutPanel22.Height = t22height;
+                                        //RFR.Height = p7height;
+                                        //DTR.Height = p8height;
+
+                                        //tableLayoutPanel20.Height = t20height;
+                                        //LinearRegression.Height = p6height;
+                                        //SGD.Height = p5height;
+
+                                        //tableLayoutPanel15.Height = t15height;
+                                        ////tableLayoutPanel15.Update();
+                                        //Perceptron.Height = p2height;
+                                        //// pictureBox2.Update();
+
+                                        //tableLayoutPanel17.Height = t17height;
+                                        ////tableLayoutPanel17.Update();
+                                        //RFC.Height = p3height;
+                                        ////pictureBox3.Update();
+                                        //DTC.Height = p4height;
+
+                                        //choosealgo.Clear();
+                                        //Console.WriteLine("choosealgoclear");
+
+                                        //modelname = "";
+                                        //ic_click = false;
+                                    }
+                                    else if (dialogResult == DialogResult.No)
+                                    {
+                                        Console.WriteLine("hehe....No means no");
+                                    }
+
+
+
+                                    return;
+
+
+                                }
+
+                                Test_Button.ActiveFillColor = SystemColors.ActiveCaption;
+                                Test_Button.ActiveLineColor = Color.White;
+                                Test_Button.IdleForecolor = Color.White;
+                                Test_Button.IdleLineColor = Color.White;
+                                Test_Button.IdleFillColor = SystemColors.ActiveCaption;
+
+                                output.Text = "";
+                                confusionmatbox.Image = null;
+                                traintime.Text = "";
+
+
+
+                                try
+                                {
+                                    System.IO.File.Delete(Application.StartupPath + @"/Pdfs/ML_report.pdf");
+                                    Directory.Delete(Application.StartupPath + @"/Pdfs");
+                                }
+                                catch
+                                {
+
+                                }
+
+                                //if (bunifuSlider1.Value > 40)
+                                //{
+                                if (run.ActiveLineColor == SystemColors.ActiveCaption)
+                                {
+                                    MessageBox.Show("Select Algorithm again to Run");
+                                    return;
+                                }
+                                //run.ActiveFillColor = Color.DodgerBlue;
+                                //run.ActiveLineColor = Color.DodgerBlue;
+                                //run.IdleForecolor = Color.DodgerBlue;
+                                //run.IdleLineColor = Color.DodgerBlue;
+                                else
+                                {
+
+
+
+                                    //var pro = new progress();
+
+                                    //trd.IsBackground = true;
+
+                                    //this.Hide();
+                                    //if (features.Count > 1)
+                                    //{
+                                    //    int z = 0;
+
+                                    //    foreach (Control c in input_panel1.Controls)
+                                    //    {
+                                    //        Bunifu.Framework.UI.BunifuCheckbox cb = c as Bunifu.Framework.UI.BunifuCheckbox;
+
+                                    //        if (cb != null)
+                                    //        {
+                                    //            if (cb.Checked)
+                                    //            {
+                                    //                z = z + 1;
+
+                                    //            }
+
+
+                                    //        }
+
+                                    //    }
+                                    //    Console.WriteLine("Count_Features: " + i);
+                                    //    if (z > 1)
+                                    //    {
+                                    //        MessageBox.Show("Select only atleast two inputs for your model");
+                                    //    }
+                                    //    else if (z == 1)
+                                    //    {
+
                                     this.Visible = false;
                                     //Application.Run(new progress());
 
@@ -2378,152 +2898,47 @@ namespace MachineLearningToolv3
                                         trd.Start();
                                         //loadingscreen();
                                     },
-                                    () => {
+                                    () =>
+                                    {
                                         cmdtrd.Start();
                                     });
-                                    //run.ActiveFillColor = SystemColors.ActiveCaption; //Color.FromArgb(2, 70, 107); SystemColors.ActiveCaption
-                                    //run.ActiveLineColor = Color.White;
-                                    //run.IdleForecolor = Color.White;
-                                    //run.IdleLineColor = Color.White;
-                                    //run.IdleFillColor = SystemColors.ActiveCaption;
 
-                                    //Test_Button.ActiveFillColor = SystemColors.ActiveCaption;
-                                    //Test_Button.ActiveLineColor = Color.White;
-                                    //Test_Button.IdleForecolor = Color.White;
-                                    //Test_Button.IdleLineColor = Color.White;
-                                    //Test_Button.IdleFillColor = SystemColors.ActiveCaption;
+                                    //   }
 
-                                    //output.Text = "";
-                                    //confusionmatbox.Image = null;
-                                    //traintime.Text = "";
-                                    //tableLayoutPanel10.Height = t10height;
-                                    //IC.Height = p1height;
+                                    // }
 
-                                    //tableLayoutPanel22.Height = t22height;
-                                    //RFR.Height = p7height;
-                                    //DTR.Height = p8height;
 
-                                    //tableLayoutPanel20.Height = t20height;
-                                    //LinearRegression.Height = p6height;
-                                    //SGD.Height = p5height;
 
-                                    //tableLayoutPanel15.Height = t15height;
-                                    ////tableLayoutPanel15.Update();
-                                    //Perceptron.Height = p2height;
-                                    //// pictureBox2.Update();
 
-                                    //tableLayoutPanel17.Height = t17height;
-                                    ////tableLayoutPanel17.Update();
-                                    //RFC.Height = p3height;
-                                    ////pictureBox3.Update();
-                                    //DTC.Height = p4height;
 
-                                    //choosealgo.Clear();
-                                    //Console.WriteLine("choosealgoclear");
 
-                                    //modelname = "";
-                                    //ic_click = false;
                                 }
-                                else if (dialogResult == DialogResult.No)
-                                {
-                                    Console.WriteLine("hehe....No means no");
-                                }
-
-
-
-                                return;
-
-
                             }
-
-                            Test_Button.ActiveFillColor = SystemColors.ActiveCaption;
-                            Test_Button.ActiveLineColor = Color.White;
-                            Test_Button.IdleForecolor = Color.White;
-                            Test_Button.IdleLineColor = Color.White;
-                            Test_Button.IdleFillColor = SystemColors.ActiveCaption;
-
-                            output.Text = "";
-                            confusionmatbox.Image = null;
-                            traintime.Text = "";
-
-
-
-                            try
-                            {
-                                System.IO.File.Delete(Application.StartupPath + @"/Pdfs/ML_report.pdf");
-                                Directory.Delete(Application.StartupPath + @"/Pdfs");
-                            }
-                            catch
-                            {
-
-                            }
-
-                            //if (bunifuSlider1.Value > 40)
-                            //{
-                            if (run.ActiveLineColor == SystemColors.ActiveCaption)
-                            {
-                                MessageBox.Show("Select Algorithm again to Run");
-                                return;
-                            }
-                            //run.ActiveFillColor = Color.DodgerBlue;
-                            //run.ActiveLineColor = Color.DodgerBlue;
-                            //run.IdleForecolor = Color.DodgerBlue;
-                            //run.IdleLineColor = Color.DodgerBlue;
                             else
                             {
-
-
-
-                                //var pro = new progress();
-
-                                //trd.IsBackground = true;
-
-                                //this.Hide();
-                                this.Visible = false;
-                                //Application.Run(new progress());
-
-                                trd = new Thread(() =>
-                                {
-                                    loadingscreen();
-
-                                });
-
-                                cmdtrd = new Thread(() =>
-                                {
-
-                                    m_oWorker.RunWorkerAsync();
-                                });
-
-
-                                Parallel.Invoke(() =>
-                                {
-                                    trd.Start();
-                                    //loadingscreen();
-                                },
-                                () => {
-                                    cmdtrd.Start();
-                                });
-
-
-
+                                MessageBox.Show("Select the data file");
                             }
+
+
                         }
-                        else
-                        {
-                            MessageBox.Show("Select the data file");
-                        }
-                        
+                        //else
+                        //{
+                        //    MessageBox.Show("Select the model");
+                        //}
 
                     }
                     else
                     {
                         MessageBox.Show("Select the model");
                     }
+
+
                 }
 
 
                 else
                 {
+                    datafact = 0;
                     if (filename.Text == string.Empty)
                     {
                         MessageBox.Show("Select data file");
@@ -2686,7 +3101,7 @@ namespace MachineLearningToolv3
                                     return;
 
 
-                            }
+                                }
                            
                             }
                             else
@@ -3009,10 +3424,11 @@ namespace MachineLearningToolv3
                 dtr_click = false;
                 rfr_click = false;
 
-               
 
-                tableLayoutPanel10.Height = 66;
-                IC.Size = new Size(71, 60);
+                Console.WriteLine(IC.Size);
+                Console.WriteLine(tableLayoutPanel10.Height);
+                tableLayoutPanel10.Height = 57; //10
+                IC.Size = new Size(61, 50); //13
 
                 run.ActiveFillColor = Color.Green;
                 run.ActiveLineColor = Color.White;
@@ -3118,8 +3534,8 @@ namespace MachineLearningToolv3
                 dtr_click = false;
                 rfr_click = false;
 
-                tableLayoutPanel15.Height = 66;
-                Perceptron.Size = new Size(71, 60);
+                tableLayoutPanel15.Height = 57;
+                Perceptron.Size = new Size(61, 50);
 
                 tableLayoutPanel17.Height = t17height;
                 RFC.Height = p3height;
@@ -3185,8 +3601,8 @@ namespace MachineLearningToolv3
                 dtr_click = false;
                 rfr_click = false;
 
-                tableLayoutPanel17.Height = 66;
-                RFC.Size = new Size(71, 60);
+                tableLayoutPanel17.Height = 57;
+                RFC.Size = new Size(61, 50);
 
                 tableLayoutPanel15.Height = t15height;
                 Perceptron.Height = p2height;
@@ -3253,8 +3669,8 @@ namespace MachineLearningToolv3
                 dtr_click = false;
                 rfr_click = false;
 
-                tableLayoutPanel17.Height = 66;
-                DTC.Size = new Size(71, 60);
+                tableLayoutPanel17.Height = 57;
+                DTC.Size = new Size(61, 50);
 
                 tableLayoutPanel15.Height = t15height;
                 Perceptron.Height = p2height;
@@ -3321,8 +3737,8 @@ namespace MachineLearningToolv3
                 rfr_click = false;
                 Console.WriteLine("Linear Regression");
 
-                tableLayoutPanel20.Height = 66;
-                LinearRegression.Size = new Size(71, 60);
+                tableLayoutPanel20.Height = 57;
+                LinearRegression.Size = new Size(61, 50);
 
                 tableLayoutPanel22.Height = t22height;
                 RFR.Height = p7height;
@@ -3390,8 +3806,8 @@ namespace MachineLearningToolv3
                 dtr_click = false;
                 rfr_click = false;
                 Console.WriteLine("SGD");
-                tableLayoutPanel20.Height = 66;
-                SGD.Size = new Size(71, 60);
+                tableLayoutPanel20.Height = 57;
+                SGD.Size = new Size(61, 50);
 
                 LinearRegression.Height = p6height;
 
@@ -3458,8 +3874,8 @@ namespace MachineLearningToolv3
                 rfr_click = false;
                 Console.WriteLine("DTR");
 
-                tableLayoutPanel22.Height = 66;
-                DTR.Size = new Size(71, 60);
+                tableLayoutPanel22.Height = 57;
+                DTR.Size = new Size(61, 50);
 
                 tableLayoutPanel20.Height = t20height;
                 LinearRegression.Height = p6height;
@@ -3529,8 +3945,8 @@ namespace MachineLearningToolv3
                 rfr_click = true;
                 Console.WriteLine("RFR");
 
-                tableLayoutPanel22.Height = 66;
-                RFR.Size = new Size(71, 60);
+                tableLayoutPanel22.Height = 57;
+                RFR.Size = new Size(61, 50);
 
                 DTR.Height = p8height;
 
@@ -3708,7 +4124,7 @@ namespace MachineLearningToolv3
                                 testscreen();
 
                             });
-
+                            test_trd.SetApartmentState(ApartmentState.STA);
                             test_trd.Start();
                             //Test test = new Test();
                             //this.Hide();
@@ -3951,6 +4367,7 @@ namespace MachineLearningToolv3
 
             try
             {
+                SetDoubleBuffered(logout_panel);
                 SetDoubleBuffered(maintablelayout);
                 SetDoubleBuffered(flowLayoutPanel1);
                 SetDoubleBuffered(tableLayoutPanel1);
@@ -3962,7 +4379,7 @@ namespace MachineLearningToolv3
                 SetDoubleBuffered(tableLayoutPanel12);
                 SetDoubleBuffered(bunifuSlider1);
                 SetDoubleBuffered(bunifuSlider2);
-                SetDoubleBuffered(tableLayoutPanel7);
+               // SetDoubleBuffered(tableLayoutPanel7);
                 SetDoubleBuffered(tableLayoutPanel8);
                 SetDoubleBuffered(tableLayoutPanel2);
                 SetDoubleBuffered(tableLayoutPanel27);
@@ -4059,7 +4476,7 @@ namespace MachineLearningToolv3
 
             try
             {
-                cycles.Location = new Point(160, 0);
+                cycles.Location = new Point(160, 2);
                 cycles.BorderStyle = BorderStyle.None;
 
                 cycles.Size = new System.Drawing.Size(40, 30);
@@ -4089,11 +4506,119 @@ namespace MachineLearningToolv3
             }
             
         }
+      
+        public void csvfilecheck()
+        {
+            //Console.WriteLine("first");
+            //bool go = true;
+            //using (CsvReader csv = new CsvReader(new StreamReader(datafilename), true))
+            //{
+            //    int fieldCount = csv.FieldCount;
+            //    Console.WriteLine(fieldCount);
+            //    string[] headers = csv.GetFieldHeaders();
+
+            //    while (csv.ReadNextRecord())
+            //    {
+            //        for (int i = 0; i < fieldCount; i++)
+            //        {
+
+            //            Console.WriteLine(csv[algo]);
+            //            //            //choosealgo.Add(csv[algo]);
+            //            //            // Console.Write(string.Format("{0} = {1};", headers[i], csv[i]));
+            //            //            if(headers[i] == csv[i])
+            //            //            {
+            //            //                MessageBox.Show("File format not supported");
+            //            //                filename.Text = "";
+            //            //                openfiledialog.Dispose();
+            //            //                go = false;
+            //            //                break;
+            //            //            }
+
+            //            //            if (headers[i].All(char.IsLetter) || headers[i].All(char.IsLetterOrDigit))
+            //            //            {
+
+            //            //                if (headers[i].All(char.IsNumber))
+            //            //                {
+            //            //                    MessageBox.Show("File format not supported");
+            //            //                    filename.Text = "";
+            //            //                    openfiledialog.Dispose();
+            //            //                    go = false;
+            //            //                    break;
+            //            //                }
+            //            //                else
+            //            //                {
+            //            //                    Console.WriteLine(headers[i] + "    valid");
+            //            //                    go = true;
+            //            //                    Console.WriteLine("second");
+            //            //                }
+            //            //            }
+            //            ////                //else
+            //            ////                //    go = false;
+            //            ////                //   break;
+            //            ////                //if (headers[i].All(char.IsLetterOrDigit))
+            //            ////                //{
+            //            ////                //    //Console.WriteLine();
+            //            ////                //    Console.WriteLine(headers[i] + "    alphanumeric");
+            //            ////                //}
 
 
 
+            //        }
+            //        break;
+
+            //    }
+
+            //    csv.Dispose();
+
+
+            //}
+
+
+            using (CsvReader csv =
+            new CsvReader(new StreamReader(datafilename), true))
+            {
+                int fieldCount = csv.FieldCount;
+                Console.WriteLine(fieldCount);
+                string[] headers = csv.GetFieldHeaders();
+
+                while (csv.ReadNextRecord())
+                {
+                    for (int i = 0; i < fieldCount; i++)
+                    {
+                        //Console.WriteLine(csv[algo]);
+                        //choosealgo.Add(csv[algo]);
+                        // Console.Write(csv[i]);
+
+                        // Console.WriteLine();
+
+
+
+                        if (headers[i] == csv[i])
+                        {
+                             MessageBox.Show("File format not supported");
+                             //filename.Text = "";
+                //            //                openfiledialog.Dispose();
+                            // go = false;
+                            // break;
+                        }
+                        
+                    }
+
+
+                }
+
+                csv.Dispose();
+            }
+
+            
+
+        }
+       // public Boolean go;
+        public static string datafile;
         private void Browsebutton_Click_1(object sender, EventArgs e)
         {
+
+            
             Test_Button.ActiveFillColor = SystemColors.ActiveCaption;
             Test_Button.ActiveLineColor = Color.White;
             Test_Button.IdleForecolor = Color.White;
@@ -4151,9 +4676,15 @@ namespace MachineLearningToolv3
             Console.WriteLine("minus 0");
 
             System.Windows.Forms.OpenFileDialog openfiledialog = new System.Windows.Forms.OpenFileDialog();
-            openfiledialog.Filter = "Data files (*.csv, *.zip) |*.csv; *.zip";
+            Console.WriteLine("opens filedialog");
+            //openfiledialog.Dispose();
+           
 
-            if (openfiledialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            openfiledialog.ShowHelp = true;
+            openfiledialog.Filter = "Data files (*.csv, *.zip) |*.csv; *.zip";
+            
+             DialogResult result = openfiledialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
             {
                 Console.WriteLine("minus 1");
                 string[] pathproject = Directory.GetFiles(Application.StartupPath, "*.zip");
@@ -4178,9 +4709,10 @@ namespace MachineLearningToolv3
                 output_panel1.Controls.Clear();
 
                 datafilename = openfiledialog.FileName;
+                datafile = openfiledialog.SafeFileName;
                 Console.WriteLine("minus 2");
                 ext = Path.GetExtension(openfiledialog.FileName);
-                Console.WriteLine(openfiledialog.SafeFileName);
+                Console.WriteLine(datafilename);
                 var fileInfo = new FileInfo(datafilename);
                 var size = (int)(Convert.ToDecimal(fileInfo.Length) / 1024) + 1;
                 if(size > 500000)
@@ -4211,175 +4743,93 @@ namespace MachineLearningToolv3
                 }
                 else
                 {
-                   
+
                     if (ext == ".zip")
                     {
-                        //using (ZipArchive zip = ZipFile.Open(datafilename, ZipArchiveMode.Read))
-                        //{
-                            
-                        //    var listOfZipFolders = zip.Entries.Where(x => x.FullName.EndsWith("/")).ToList();
-                        //    for (int i = 0; i < listOfZipFolders.Count; i++)
-                        //    {
-                        //        Console.WriteLine(listOfZipFolders[i]);
-                        //        string folders = Convert.ToString(listOfZipFolders[i]);
-                        //        var count = folders.Count(x => x == '/');
-                        //        if (count > 1)
-                        //        {
-                        //            MessageBox.Show("zip file invalid");
-                        //            break;
-                        //        }
-                        //        else
-                        //        {
-                        //            filename.Text = "Filename: " + openfiledialog.SafeFileName + " (" + size + " kb)";
-                        //            System.IO.File.Copy(datafilename, Application.StartupPath + @"\" + openfiledialog.SafeFileName, true);
-                        //            browsealgozip = true;
-                        //            input_panel1.Enabled = false;
-                        //            input_panel1.Controls.Clear();
-                        //            //panel4.Enabled = false;
-                        //            //label2.Enabled = false;
-                        //            //panel5.Enabled = false;
-                        //            output_panel1.Enabled = false;
-                        //            output_panel1.Controls.Clear();
-                        //            // label3.Enabled = false;
-                        //            bunifuSlider2.Visible = true;
-                        //            label22.Visible = true;
-                        //            cycles.Visible = true;
+                        datafact = 0;
 
-                        //            bunifuSlider2.Value = Convert.ToInt32(cycles.Text);
-
-
-                        //            label4.Enabled = true;
-                        //            //bunifuCustomLabel1.Enabled = true;
-                        //            // bunifuCustomLabel2.Enabled = true;
-                        //            label5.Enabled = true;
-                        //            label19.Enabled = true;
-
-                        //            label6.ForeColor = Color.White;
-
-                        //            label9.ForeColor = Color.DarkGray;
-                        //            label13.ForeColor = Color.DarkGray;
-
-                        //            IC.Image = Image.FromFile(Application.StartupPath + @"/icons/visual.png");
-                        //            label7.ForeColor = Color.White;
-
-
-                        //            LinearRegression.Image = Image.FromFile(Application.StartupPath + @"/icons/sgd.png");
-                        //            LinearRegression.Image = SetAlpha((Bitmap)LinearRegression.Image, 60);
-                        //            label15.ForeColor = Color.DarkGray;
-
-                        //            SGD.Image = Image.FromFile(Application.StartupPath + @"/icons/sgd.png");
-                        //            SGD.Image = SetAlpha((Bitmap)SGD.Image, 60);
-                        //            label14.ForeColor = Color.DarkGray;
-
-                        //            DTR.Image = Image.FromFile(Application.StartupPath + @"/icons/dtr.png");
-                        //            DTR.Image = SetAlpha((Bitmap)DTR.Image, 60);
-                        //            label18.ForeColor = Color.DarkGray;
-
-                        //            RFR.Image = Image.FromFile(Application.StartupPath + @"/icons/rfr.png");
-                        //            RFR.Image = SetAlpha((Bitmap)RFR.Image, 60);
-                        //            label17.ForeColor = Color.DarkGray;
-
-                        //            Perceptron.Image = Image.FromFile(Application.StartupPath + @"/icons/perceptron.png");
-                        //            Perceptron.Image = SetAlpha((Bitmap)Perceptron.Image, 60);
-                        //            label10.ForeColor = Color.DarkGray;
-
-                        //            DTC.Image = Image.FromFile(Application.StartupPath + @"/icons/dtc.png");
-                        //            DTC.Image = SetAlpha((Bitmap)DTC.Image, 60);
-                        //            label11.ForeColor = Color.DarkGray;
-
-                        //            RFC.Image = Image.FromFile(Application.StartupPath + @"/icons/rfc.png");
-                        //            RFC.Image = SetAlpha((Bitmap)RFC.Image, 60);
-                        //            label12.ForeColor = Color.DarkGray;
-
-
-
-                        //            IC.Enabled = true;
-                        //            Perceptron.Enabled = false;
-                        //            DTC.Enabled = false;
-                        //            RFC.Enabled = false;
-
-
-                        //            LinearRegression.Enabled = false;
-                        //            SGD.Enabled = false;
-                        //            DTR.Enabled = false;
-                        //            RFR.Enabled = false;
-                        //            break;
-                        //        }
-                        //    }
-                            
-                        //}
-
-
-
-
-                        filename.Text = "Filename: " + openfiledialog.SafeFileName + " (" + size + " kb)";
-                        System.IO.File.Copy(datafilename, Application.StartupPath + @"\" + openfiledialog.SafeFileName, true);
-                        browsealgozip = true;
-                        input_panel1.Enabled = false;
                         input_panel1.Controls.Clear();
-                        output_panel1.Enabled = false;
-                        output_panel1.Controls.Clear();
-                        bunifuSlider2.Visible = true;
-                        label22.Visible = true;
-                        cycles.Visible = true;
+                        createzipcheckboxes();
+                        //zipfilecheck();
+                        if (flag == false)
+                        {
+                            
+                      
+                            filename.Text = "Filename: " + openfiledialog.SafeFileName + " (" + size + " kb)";
+                            System.IO.File.Copy(datafilename, Application.StartupPath + @"\" + openfiledialog.SafeFileName, true);
+                            browsealgozip = true;
+                            input_panel1.Enabled = true;
+                            //input_panel1.Controls.Clear();
+                            output_panel1.Enabled = false;
+                            output_panel1.Controls.Clear();
+                            bunifuSlider2.Visible = true;
+                            label22.Visible = true;
+                            cycles.Visible = true;
 
-                        bunifuSlider2.Value = Convert.ToInt32(cycles.Text);
-
-
-                        label4.Enabled = true;
-                        label5.Enabled = true;
-                        label19.Enabled = true;
-
-                        label6.ForeColor = Color.White;
-
-                        label9.ForeColor = Color.DarkGray;
-                        label13.ForeColor = Color.DarkGray;
-
-                        IC.Image = Image.FromFile(Application.StartupPath + @"/icons/visual.png");
-                        label7.ForeColor = Color.White;
+                            bunifuSlider2.Value = Convert.ToInt32(cycles.Text);
 
 
-                        LinearRegression.Image = Image.FromFile(Application.StartupPath + @"/icons/sgd.png");
-                        LinearRegression.Image = SetAlpha((Bitmap)LinearRegression.Image, 60);
-                        label15.ForeColor = Color.DarkGray;
+                            label4.Enabled = true;
+                            label5.Enabled = true;
+                            label19.Enabled = true;
 
-                        SGD.Image = Image.FromFile(Application.StartupPath + @"/icons/sgd.png");
-                        SGD.Image = SetAlpha((Bitmap)SGD.Image, 60);
-                        label14.ForeColor = Color.DarkGray;
+                            label6.ForeColor = Color.White;
 
-                        DTR.Image = Image.FromFile(Application.StartupPath + @"/icons/dtr.png");
-                        DTR.Image = SetAlpha((Bitmap)DTR.Image, 60);
-                        label18.ForeColor = Color.DarkGray;
+                            label9.ForeColor = Color.DarkGray;
+                            label13.ForeColor = Color.DarkGray;
 
-                        RFR.Image = Image.FromFile(Application.StartupPath + @"/icons/rfr.png");
-                        RFR.Image = SetAlpha((Bitmap)RFR.Image, 60);
-                        label17.ForeColor = Color.DarkGray;
-
-                        Perceptron.Image = Image.FromFile(Application.StartupPath + @"/icons/perceptron.png");
-                        Perceptron.Image = SetAlpha((Bitmap)Perceptron.Image, 60);
-                        label10.ForeColor = Color.DarkGray;
-
-                        DTC.Image = Image.FromFile(Application.StartupPath + @"/icons/dtc.png");
-                        DTC.Image = SetAlpha((Bitmap)DTC.Image, 60);
-                        label11.ForeColor = Color.DarkGray;
-
-                        RFC.Image = Image.FromFile(Application.StartupPath + @"/icons/rfc.png");
-                        RFC.Image = SetAlpha((Bitmap)RFC.Image, 60);
-                        label12.ForeColor = Color.DarkGray;
+                            IC.Image = Image.FromFile(Application.StartupPath + @"/icons/visual.png");
+                            label7.ForeColor = Color.White;
 
 
+                            LinearRegression.Image = Image.FromFile(Application.StartupPath + @"/icons/sgd.png");
+                            LinearRegression.Image = SetAlpha((Bitmap)LinearRegression.Image, 60);
+                            label15.ForeColor = Color.DarkGray;
 
-                        IC.Enabled = true;
-                        Perceptron.Enabled = false;
-                        DTC.Enabled = false;
-                        RFC.Enabled = false;
+                            SGD.Image = Image.FromFile(Application.StartupPath + @"/icons/sgd.png");
+                            SGD.Image = SetAlpha((Bitmap)SGD.Image, 60);
+                            label14.ForeColor = Color.DarkGray;
+
+                            DTR.Image = Image.FromFile(Application.StartupPath + @"/icons/dtr.png");
+                            DTR.Image = SetAlpha((Bitmap)DTR.Image, 60);
+                            label18.ForeColor = Color.DarkGray;
+
+                            RFR.Image = Image.FromFile(Application.StartupPath + @"/icons/rfr.png");
+                            RFR.Image = SetAlpha((Bitmap)RFR.Image, 60);
+                            label17.ForeColor = Color.DarkGray;
+
+                            Perceptron.Image = Image.FromFile(Application.StartupPath + @"/icons/perceptron.png");
+                            Perceptron.Image = SetAlpha((Bitmap)Perceptron.Image, 60);
+                            label10.ForeColor = Color.DarkGray;
+
+                            DTC.Image = Image.FromFile(Application.StartupPath + @"/icons/dtc.png");
+                            DTC.Image = SetAlpha((Bitmap)DTC.Image, 60);
+                            label11.ForeColor = Color.DarkGray;
+
+                            RFC.Image = Image.FromFile(Application.StartupPath + @"/icons/rfc.png");
+                            RFC.Image = SetAlpha((Bitmap)RFC.Image, 60);
+                            label12.ForeColor = Color.DarkGray;
 
 
-                        LinearRegression.Enabled = false;
-                        SGD.Enabled = false;
-                        DTR.Enabled = false;
-                        RFR.Enabled = false;
 
+                            IC.Enabled = true;
+                            Perceptron.Enabled = false;
+                            DTC.Enabled = false;
+                            RFC.Enabled = false;
+
+
+                            LinearRegression.Enabled = false;
+                            SGD.Enabled = false;
+                            DTR.Enabled = false;
+                            RFR.Enabled = false;
+                        }
+                        else
+                        {
+                            openfiledialog.Dispose();
+                            flag = false;
+                        }
+
+                       
 
 
 
@@ -4389,79 +4839,117 @@ namespace MachineLearningToolv3
                     }
                     else if (ext == ".csv")
                     {
-                        //Console.WriteLine("first");
-                        //bool go = true; 
-                        //using (CsvReader csv = new CsvReader(new StreamReader(datafilename), true))
-                        //{
-                        //    int fieldCount = csv.FieldCount;
-                        //    //Console.WriteLine(fieldCount);
-                        //     string[] headers = csv.GetFieldHeaders();
+                        try
+                        {
+                            System.IO.DirectoryInfo di1 = new DirectoryInfo(Application.StartupPath + @"\datafactory");
 
-                        //    while (csv.ReadNextRecord())
-                        //    {
-                        //        for (int i = 0; i < fieldCount; i++)
-                        //        {
-                                    
-                        //            //Console.WriteLine(csv[algo]);
-                        //            //choosealgo.Add(csv[algo]);
-                        //            // Console.Write(string.Format("{0} = {1};", headers[i], csv[i]));
-                        //            if(headers[i] == csv[i])
-                        //            {
-                        //                MessageBox.Show("File format not supported");
-                        //                filename.Text = "";
-                        //                openfiledialog.Dispose();
-                        //                go = false;
-                        //                break;
-                        //            }
-                                    
-                        //            if (headers[i].All(char.IsLetter) || headers[i].All(char.IsLetterOrDigit))
-                        //            {
+                            foreach (FileInfo file in di1.GetFiles())
+                            {
+                                file.Delete();
+                            }
+                            foreach (DirectoryInfo dir in di1.GetDirectories())
+                            {
+                                dir.Delete(true);
+                            }
+                            Directory.Delete(Application.StartupPath + @"\datafactory");
+                        }
+                        catch
+                        {
+                            Console.WriteLine("directory not found");
+                        }
 
-                        //                if (headers[i].All(char.IsNumber))
-                        //                {
-                        //                    MessageBox.Show("File format not supported");
-                        //                    filename.Text = "";
-                        //                    openfiledialog.Dispose();
-                        //                    go = false;
-                        //                    break;
-                        //                }
-                        //                else
-                        //                {
-                        //                    Console.WriteLine(headers[i] + "    valid");
-                        //                    go = true;
-                        //                    Console.WriteLine("second");
-                        //                }
-                        //            }
-                        //                //else
-                        //                //    go = false;
-                        //                //   break;
-                        //                //if (headers[i].All(char.IsLetterOrDigit))
-                        //                //{
-                        //                //    //Console.WriteLine();
-                        //                //    Console.WriteLine(headers[i] + "    alphanumeric");
-                        //                //}
+
+
+                        int cnter = 0;
+
+                        bool go = true;
+                        // csvfilecheck();
+                        using (CsvReader csv = new CsvReader(new StreamReader(datafilename), true))
+                        {
+                            int fieldCount = csv.FieldCount;
+                            Console.WriteLine(fieldCount);
+                            string[] headers = csv.GetFieldHeaders();
+
+                            while (csv.ReadNextRecord())
+                            {
+                                for (int i = 0; i < fieldCount; i++)
+                                {
+                                    //Console.WriteLine(csv[algo]);
+                                    //choosealgo.Add(csv[algo]);
+                                    // Console.Write(csv[i]);
+
+                                    // Console.WriteLine();
+
+
+
+                                    if (headers[i] == csv[i])
+                                    {
+                                        cnter = cnter + 1;
+                                        if(cnter == 1)
+                                        {
+                                            Console.WriteLine("first condition");
+                                            filename.Text = "";
+                                            MessageBox.Show("File format not supported");
+                                            openfiledialog.Dispose();
+                                            go = false;
+                                            break;
+                                        }
                                         
-                                    
-                                    
-                        //        }
-                        //        break;
+                                    }
 
-                        //    }
+                                  //  if (headers[i].All(char.IsLetter) || headers[i].All(char.IsLetterOrDigit))
+                                  //  {
 
-                        //    csv.Dispose();
+                                    else if (headers[i].All(char.IsNumber))
+                                    {
+                                        cnter = cnter + 1;
+                                        if(cnter == 1)
+                                        {
+                                            Console.WriteLine("second condition");
+                                            filename.Text = "";
+                                            MessageBox.Show("File format not supported");
+                                            openfiledialog.Dispose();
+                                            go = false;
+                                            break;
+                                        }
+                                        
+                                    }
+                                    //else if (headers[i].All(char.IsWhiteSpace))
+                                    //{
+                                    //    cnter = cnter + 1;
+                                    //    if (cnter == 1)
+                                    //    {
+                                    //        Console.WriteLine("Third condition");
+                                    //        filename.Text = "";
+                                    //        MessageBox.Show("File format not supported");
+                                    //        openfiledialog.Dispose();
+                                    //        go = false;
+                                    //        break;
+                                    //    }
+                                    //}
+
+                                    //    else
+                                    //    {
+                                    ////            //                    Console.WriteLine(headers[i] + "    valid");
+                                    ////            //                    go = true;
+                                    ////            //                    Console.WriteLine("second");
+                                    //    }
+                                    // }
 
 
-                        //}
-
-                        
 
 
 
+                                }
+
+
+                            }
+
+                            csv.Dispose();
+                        }
 
 
 
-
-                       
 
 
                         //Perceptron.Image = SetAlpha((Bitmap)Perceptron.Image, 60);
@@ -4485,8 +4973,11 @@ namespace MachineLearningToolv3
                         //RFR.Image = SetAlpha((Bitmap)RFR.Image, 60);
                         //label17.ForeColor = Color.DarkGray;
 
-                       // if(go == true)
+                        // if(go == true)
                         ///{
+                        ///
+                        if (go == true)
+                        {
                             Console.WriteLine("third");
                             System.IO.File.Copy(datafilename, Application.StartupPath + @"\" + openfiledialog.SafeFileName, true);
                             //browsealgocsv = true;
@@ -4531,6 +5022,7 @@ namespace MachineLearningToolv3
                                 SGD.Enabled = false;
                                 DTR.Enabled = false;
                                 RFR.Enabled = false;
+                                openfiledialog.Dispose();
                                 //go = true;
                             }
                             catch (System.IO.IOException ex)
@@ -4578,15 +5070,24 @@ namespace MachineLearningToolv3
 
                                 choosealgo.Clear();
                                 Console.WriteLine("choosealgoclear2");
-
+                                openfiledialog.Dispose();
                                 //go = true;
 
                             }
                             catch
                             {
                                 Console.WriteLine("no data file selected");
+                                openfiledialog.Dispose();
                                 //go = true;
                             }
+                        }
+                        else
+                        {
+                            //filename.Text = "";
+                            openfiledialog.Dispose();
+                            Console.WriteLine("false");
+                            go = true;
+                        }
                         //}
                         //else
                         //{
@@ -4597,20 +5098,20 @@ namespace MachineLearningToolv3
                         //openfiledialog.Dispose();
                     }
                 }
-                
+                openfiledialog.Dispose();  
             }
             else
             {
                 //MessageBox.Show("Select data file again");
 
-               // bunifuSlider2.Visible = false;
-               // label22.Visible = false;
-               // cycles.Visible = false;
+                // bunifuSlider2.Visible = false;
+                // label22.Visible = false;
+                // cycles.Visible = false;
                 //filename.Text = "";
 
-               // label6.ForeColor = Color.DarkGray;
-
+                // label6.ForeColor = Color.DarkGray;
                 
+
 
                 if (ext == ".csv")
                 {
@@ -4621,6 +5122,7 @@ namespace MachineLearningToolv3
                 }
                 else
                 {
+                    datafact = 2;
                     label9.ForeColor = Color.DarkGray;
                     label13.ForeColor = Color.DarkGray;
                     LinearRegression.Image = Image.FromFile(Application.StartupPath + @"/icons/sgd.png");
@@ -4687,8 +5189,11 @@ namespace MachineLearningToolv3
                 RFC.Height = p3height;
                 //pictureBox3.Update();
                 DTC.Height = p4height;
+
+                openfiledialog.Dispose();
             }
             openfiledialog.Dispose();
+           
         }
 
         private void IC_Click1(object sender, EventArgs e)
@@ -4773,7 +5278,7 @@ def main(argv):
     #f.close()
     print(""Accuracy: "", round(lr.score(X_test, y_test) * 100, 2))
 
-    pkl_filename =""LinearRegression.pkl""
+    pkl_filename =r"""+ Application.StartupPath+@"/LinearRegression.pkl""
     with open(pkl_filename,'wb') as file:
         pickle.dump(lr_model, file)
 
@@ -4811,9 +5316,9 @@ def main(argv):
     outputs = []
     mapping = {}
 
-    inputs.append("+ "\"" + String.Join(",", features.ToArray()) + "\"" + @")
-    outputs.append("+ "\"" + String.Join(",", labels.ToArray()) + "\"" + @")
-    test_size = " + split/100 +@"
+    inputs.append(" + "\"" + String.Join(",", features.ToArray()) + "\"" + @")
+    outputs.append(" + "\"" + String.Join(",", labels.ToArray()) + "\"" + @")
+    test_size = " + split / 100 + @"
         
     df = pd.read_csv(datafile)
     df = df.dropna()
@@ -4840,7 +5345,7 @@ def main(argv):
                 df = df[inputs[0].split(',')]
     print(""Accuracy: "", round(sgd.score(X_test, y_test) * 100, 2))
 
-    pkl_filename = ""SGD.pkl""
+    pkl_filename = r""" + Application.StartupPath + @"/SGD.pkl""
     with open(pkl_filename,'wb') as file:
         pickle.dump(sgd_model, file)
 
@@ -4876,9 +5381,9 @@ def main(argv):
     outputs = []
     mapping={}
 
-    inputs.append("+ "\"" + String.Join(",", features.ToArray()) + "\"" + @")
-    outputs.append("+ "\"" + String.Join(",", labels.ToArray()) + "\"" + @")
-    test_size = "+ split/100 +@"
+    inputs.append(" + "\"" + String.Join(",", features.ToArray()) + "\"" + @")
+    outputs.append(" + "\"" + String.Join(",", labels.ToArray()) + "\"" + @")
+    test_size = " + split / 100 + @"
 
     df = pd.read_csv(datafile)
     df = df.dropna()
@@ -4907,7 +5412,7 @@ def main(argv):
                 df = df[inputs[0].split(',')]
     print(""Accuracy: "", round(dr.score(X_test, y_test) * 100, 2))
 
-    pkl_filename = ""DTR.pkl""
+    pkl_filename = r""" + Application.StartupPath + @"/DTR.pkl""
     with open(pkl_filename,'wb') as file:
         pickle.dump(dr_model, file)
 
@@ -4945,7 +5450,7 @@ def main(argv):
    
     inputs.append(" + "\"" + String.Join(",", features.ToArray()) + "\"" + @")
     outputs.append(" + "\"" + String.Join(",", labels.ToArray()) + "\"" + @")
-    test_size = "+ split/100 +@"
+    test_size = " + split / 100 + @"
        
 
     df = pd.read_csv(datafile)
@@ -4975,7 +5480,7 @@ def main(argv):
 
     print(""Accuracy: "", round(rf.score(X_test, y_test) * 100, 2))
 
-    pkl_filename = ""RFR.pkl""
+    pkl_filename = r""" + Application.StartupPath + @"/RFR.pkl""
     with open(pkl_filename,'wb') as file:
         pickle.dump(rf_model, file)
 
@@ -5012,9 +5517,9 @@ def main(argv):
     outputs = []
     mapping = {}
     
-    inputs.append("+ "\"" + String.Join(",", features.ToArray()) + "\"" + @")
-    outputs.append("+ "\"" + String.Join(",", labels.ToArray()) + "\"" + @")
-    test_size = "+ split/100 +@"
+    inputs.append(" + "\"" + String.Join(",", features.ToArray()) + "\"" + @")
+    outputs.append(" + "\"" + String.Join(",", labels.ToArray()) + "\"" + @")
+    test_size = " + split / 100 + @"
         
 
     df = pd.read_csv(datafile)
@@ -5049,8 +5554,8 @@ def main(argv):
     ax.set_yticklabels(np.unique(y_test), va = 'center', fontdict = label_font, rotation = 45)
     ax.set_xticklabels(np.unique(y_test), ha = 'center', fontdict = label_font, rotation = 45)
     fig = matimage.get_figure()
-    fig.savefig('Perceptron_confusion.png',bbox_inches = 'tight', dpi = 400)
-    pkl_filename = ""Perceptron.pkl""
+    fig.savefig(r""" + Application.StartupPath + @"/Perceptron_confusion.png"",bbox_inches = 'tight', dpi = 400)
+    pkl_filename = r""" + Application.StartupPath + @"/Perceptron.pkl""
     with open(pkl_filename,'wb') as file:
         pickle.dump(per_model, file)
 
@@ -5129,9 +5634,9 @@ def main(argv):
     ax.set_yticklabels(np.unique(y_test), va = 'center', fontdict = label_font, rotation = 45)
     ax.set_xticklabels(np.unique(y_test), ha = 'center', fontdict = label_font, rotation = 45)
     fig = matimage.get_figure()
-    fig.savefig('DTC_confusion.png',bbox_inches = 'tight', dpi = 400)
+    fig.savefig(r""" + Application.StartupPath + @"/DTC_confusion.png"",bbox_inches = 'tight', dpi = 400)
 
-    pkl_filename = ""DTC.pkl""
+    pkl_filename =r""" + Application.StartupPath + @"/DTC.pkl""
     with open(pkl_filename,'wb') as file:
         pickle.dump(dc_model, file)
 
@@ -5167,9 +5672,9 @@ def main(argv):
     outputs = []
     mapping = {}
 
-    inputs.append("+ "\"" + String.Join(",", features.ToArray()) + "\"" + @")
+    inputs.append(" + "\"" + String.Join(",", features.ToArray()) + "\"" + @")
     outputs.append(" + "\"" + String.Join(",", labels.ToArray()) + "\"" + @")
-    test_size =" + split/100 + @" 
+    test_size =" + split / 100 + @" 
 
     df = pd.read_csv(datafile)
     df = df.dropna()
@@ -5202,8 +5707,8 @@ def main(argv):
     ax.set_yticklabels(np.unique(y_test), va = 'center', fontdict = label_font, rotation = 45)
     ax.set_xticklabels(np.unique(y_test), ha = 'center', fontdict = label_font, rotation = 45)
     fig = matimage.get_figure()
-    fig.savefig('RFC_confusion.png',bbox_inches = 'tight', dpi = 400)
-    pkl_filename = ""RFC.pkl""
+    fig.savefig(r""" + Application.StartupPath + @"/RFC_confusion.png"",bbox_inches = 'tight', dpi = 400)
+    pkl_filename = r""" + Application.StartupPath + @"/RFC.pkl""
     with open(pkl_filename,'wb') as file:
         pickle.dump(rfc_model, file)
 
@@ -5221,6 +5726,111 @@ if __name__ == ""__main__"":
 
         public void create_IC()
         {
+            Console.WriteLine("stage 1");
+            zipcheck();
+
+            Console.WriteLine("stage 2");
+
+            feat = feat.Distinct().ToList();
+            features = features.Distinct().ToList();
+            feat = features;
+
+            Console.WriteLine("stage 3");
+            if(datafact == 0)
+            {
+                try
+                {
+                    System.IO.DirectoryInfo di1 = new DirectoryInfo(Application.StartupPath + @"\datafactory");
+
+                    foreach (FileInfo file in di1.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo dir in di1.GetDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+                    Directory.Delete(Application.StartupPath + @"\datafactory");
+                }
+                catch
+                {
+                    Console.WriteLine("directory not found");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Datafactory exists");
+            }
+
+            System.IO.Directory.CreateDirectory(Application.StartupPath + @"\datafactory");
+            Console.WriteLine(Application.StartupPath + @"\" + datafile);
+            if(datafact == 0)
+            {
+                try
+                {
+                    System.IO.File.Copy(Application.StartupPath + @"\" + datafile, Application.StartupPath + @"\datafactory\" + datafile, true);
+                    Console.WriteLine("copying");
+                }
+                catch
+                {
+                    Console.WriteLine("already copy");
+                }
+            }
+            datafact = datafact + 1;
+            var result = zipfolders.Except(feat);
+            zipcheckfolders = result.ToList();
+            for (int i = 0; i < feat.Count; i++)
+            {
+                Console.WriteLine(feat[i]);
+            }
+            
+
+            zipcheckfolders = zipcheckfolders.Distinct().ToList();
+
+            for (int i = 0; i < zipcheckfolders.Count; i++)
+            {
+                Console.WriteLine("------------------");
+                Console.WriteLine(zipcheckfolders[i]);
+                Console.WriteLine("------------------");
+                
+            }
+            
+            using (ZipFile zip = ZipFile.Read(Application.StartupPath + @"\" + datafile))
+            {
+                for (int x = zip.Count - 1; x >= 0; x--)
+                {
+                    ZipEntry e = zip[x];
+                    for (int i = 0; i < zipcheckfolders.Count; i++)
+                    {
+                        try
+                        {
+                            if (e.FileName.Substring(0, Convert.ToString(zipcheckfolders[i]).Length) == Convert.ToString(zipcheckfolders[i]))
+                            {
+                                Console.WriteLine(e.FileName);
+                                zip.RemoveEntry(e.FileName);
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine("out of range exception");
+                        }
+
+                    }
+                   
+                    
+                }
+                zip.Save();
+            }
+
+
+           
+            zipcheckfolders.Clear();
+            features.Clear();
+            feat.Clear();
+            
+
+
+
             float split = Convert.ToInt32(test.Text);
             int cycles1 = Convert.ToInt32(cycles.Text);
             
@@ -5260,10 +5870,10 @@ IMAGE_WIDTH = 30
 IMAGE_HEIGHT = 30
 num_pixels = IMAGE_WIDTH * IMAGE_HEIGHT
 
-for root_fol, directory_fol, files in os.walk(r'"+Application.StartupPath + @"') : 
+for root_fol, directory_fol, files in os.walk(r'" + Application.StartupPath + @"') : 
         for file in files : 
             if file.endswith('.zip'):
-                zzip = zipfile.ZipFile(r'"+ Application.StartupPath + @"' + '\\' + file)
+                zzip = zipfile.ZipFile(r'" + Application.StartupPath + @"' + '\\' + file)
                 zzip.extractall(r'" + Application.StartupPath + @"\root')
                 zzip.close()
 
@@ -5279,7 +5889,7 @@ for root, dirs, files in os.walk(r""" + Application.StartupPath + @"\root""):
         if name != 'mix':
             for images in os.listdir(os.path.join(root, name)):
                 cnt = cnt + 1
-                copypath = ""./root/mix/"" + destpath + ""."" + str(cnt) + "".jpg""
+                copypath = r""" + Application.StartupPath + @"/root/mix/"" + destpath + ""."" + str(cnt) + "".jpg""
                 os.rename(os.path.join(root, name) + ""\\"" + images, copypath)
 
 
@@ -5301,7 +5911,7 @@ try:
     inputs = np.asarray(input_data)
     outputs = np.asarray(output_data)
 
-    X_train, X_test, Y_train, Y_test = train_test_split(inputs, outputs, test_size = " + split/100 + @")
+    X_train, X_test, Y_train, Y_test = train_test_split(inputs, outputs, test_size = " + split / 100 + @")
     X_train = X_train.reshape(X_train.shape[0], IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS)
     X_test = X_test.reshape(X_test.shape[0], IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS)
 
@@ -5381,9 +5991,9 @@ for i in history.history['accuracy']:
     print(""Cycle: "" + str(count), ""   "", ""Accuracy: "", round(i * 100, 0))
     count = count + 1
 
-model.save_weights(""cnn.h5"")
+model.save_weights(r""" + Application.StartupPath + @"/cnn.h5"")
 
-with open('cnn.json', 'w') as f:
+with open(r""" + Application.StartupPath + @"/cnn.json"", 'w') as f:
     f.write(model.to_json())
     f.close()";
 

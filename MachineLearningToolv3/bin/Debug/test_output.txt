@@ -461,28 +461,21 @@ Inputs: 12,1
 Prediction: Iris-virginica
 
 Test 0
-Inputs: 12
-Prediction: 33.05
-Test 1
-Inputs: 20
-Prediction: 31.82
-Test 0
-Inputs: 12
-Prediction: 33.12
-Test 0
-Inputs: 12
-Prediction: 33.06
-Test 0
-Inputs: 12
-Prediction: 32.97
-Test 1
-Inputs: 1343
-Prediction: 33.15
-Test 0
-Inputs: 1,2
-Prediction: Iris-virginica
+Inputs: 1,1,1,1
+Prediction: Iris-setosa
 
 Test 0
-Inputs: 1,1
-Prediction: Iris-versicolor
-
+Inputs: 1,11,1
+Prediction: -0.57
+Test 0
+Inputs: 1,2,2
+Prediction: 
+Test 1
+Inputs: 1,2,2
+Prediction: 
+Test 0
+Inputs: 1,2,3
+Prediction: 1.1
+Test 0
+Inputs: 1,1,1
+Prediction: 0.27

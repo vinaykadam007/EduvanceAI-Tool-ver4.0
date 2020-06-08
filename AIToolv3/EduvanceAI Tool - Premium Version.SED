@@ -24,9 +24,9 @@ SourceFiles=SourceFiles
 InstallPrompt=
 DisplayLicense=
 FinishMessage=
-TargetName=C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\AIToolv3\EduvanceAI Tool - Premium Version.EXE
+TargetName=C:\Users\Admin\source\repos\MachineLearningToolv3\AIToolv3\EduvanceAI Tool - Premium Version.EXE
 FriendlyName=EduvanceAI Tool - Premium Version
-AppLaunched=cmd.exe /c setup.bat
+AppLaunched=cmd /c setup.bat
 PostInstallCmd=<None>
 AdminQuietInstCmd=
 UserQuietInstCmd=
@@ -34,7 +34,7 @@ FILE0="AIToolv3.exe"
 FILE1="python36.exe"
 FILE2="setup.bat"
 [SourceFiles]
-SourceFiles0=C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\AIToolv3\Debug\
+SourceFiles0=C:\Users\Admin\source\repos\MachineLearningToolv3\AIToolv3\Debug\
 [SourceFiles0]
 %FILE0%=
 %FILE1%=

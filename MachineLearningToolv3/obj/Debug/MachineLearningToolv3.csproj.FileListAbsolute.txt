@@ -26,19 +26,16 @@ C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debu
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\AForge.Video.DirectShow.dll
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\AForge.Video.dll
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\Bunifu_UI_v1.52.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\FilterControls.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\LumenWorks.Framework.IO.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\SerialBoxes.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\SoftwareLocker.dll
+C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\Ionic.Zip.dll
+C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\AForge.xml
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\AForge.Video.xml
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\AForge.Video.DirectShow.xml
-C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\FilterControls.pdb
-C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\LumenWorks.Framework.IO.xml
-C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\SoftwareLocker.pdb
+C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.cnntest.resources
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.MLTool.resources
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.loading_libraries.resources
+C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.Loginform.resources
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.progress.resources
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.Properties.Resources.resources
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.splashscreen.resources
@@ -49,65 +46,4 @@ C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debu
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.csproj.CopyComplete
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\EduvanceAI Tool - Premium Version.exe
 C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\EduvanceAI Tool - Premium Version.pdb
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\EduvanceAI Tool - Premium Version.exe.config
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\EduvanceAI Tool - Premium Version.exe
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\EduvanceAI Tool - Premium Version.pdb
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\AForge.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\AForge.Video.DirectShow.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\AForge.Video.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\Bunifu_UI_v1.52.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\FilterControls.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\LumenWorks.Framework.IO.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\SerialBoxes.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\SoftwareLocker.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\AForge.xml
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\AForge.Video.xml
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\AForge.Video.DirectShow.xml
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\FilterControls.pdb
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\LumenWorks.Framework.IO.xml
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\bin\Debug\SoftwareLocker.pdb
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.csprojAssemblyReference.cache
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.cnntest.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.MLTool.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.loading_libraries.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.progress.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.Properties.Resources.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.splashscreen.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.Test.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.web_cam_select.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.csproj.GenerateResource.cache
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.csproj.CoreCompileInputs.cache
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.csproj.CopyComplete
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\EduvanceAI Tool - Premium Version.exe
-C:\Users\Admin\source\repos\MachineLearningToolv3(nextgen)\MachineLearningToolv3\obj\Debug\EduvanceAI Tool - Premium Version.pdb
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\EduvanceAI Tool - Premium Version.exe.config
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\EduvanceAI Tool - Premium Version.exe
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\EduvanceAI Tool - Premium Version.pdb
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\AForge.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\AForge.Video.DirectShow.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\AForge.Video.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\Bunifu_UI_v1.52.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\FilterControls.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\LumenWorks.Framework.IO.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\SerialBoxes.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\SoftwareLocker.dll
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\AForge.xml
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\AForge.Video.xml
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\AForge.Video.DirectShow.xml
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\FilterControls.pdb
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\LumenWorks.Framework.IO.xml
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\bin\Debug\SoftwareLocker.pdb
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.csprojAssemblyReference.cache
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.cnntest.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.MLTool.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.loading_libraries.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.progress.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.Properties.Resources.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.splashscreen.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.Test.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.web_cam_select.resources
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.csproj.GenerateResource.cache
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.csproj.CoreCompileInputs.cache
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.csproj.CopyComplete
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\EduvanceAI Tool - Premium Version.exe
-C:\Users\Admin\source\repos\MachineLearningToolv3(upload)\MachineLearningToolv3\obj\Debug\EduvanceAI Tool - Premium Version.pdb
+C:\Users\Admin\source\repos\MachineLearningToolv3\MachineLearningToolv3\obj\Debug\MachineLearningToolv3.csprojAssemblyReference.cache

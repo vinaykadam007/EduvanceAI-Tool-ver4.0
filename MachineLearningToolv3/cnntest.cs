@@ -234,47 +234,54 @@ namespace MachineLearningToolv3
         private void cnntest_Load(object sender, EventArgs e)
         {
             //s_oInstance = this;
-
-            pictest = new PictureBox();
-            pictest.Image = null;
-            pictest.SizeMode = PictureBoxSizeMode.Zoom;
-            pictest.Location = new System.Drawing.Point(180, 26);
-            pictest.Size = new Size(200, 200);
-            inputpanels.Controls.Add(pictest);
             try
             {
-                pictest.Paint += new PaintEventHandler(pictest_Paint);
+                pictest = new PictureBox();
+                pictest.Image = null;
+                pictest.SizeMode = PictureBoxSizeMode.Zoom;
+                pictest.Location = new System.Drawing.Point(180, 26);
+                pictest.Size = new Size(200, 200);
+                inputpanels.Controls.Add(pictest);
+                try
+                {
+                    pictest.Paint += new PaintEventHandler(pictest_Paint);
+                }
+                catch
+                {
+                    Console.WriteLine("Parameter is not valid");
+                }
+
+
+                try
+                {
+                    System.IntPtr ptr = CreateRoundRectRgn(0, 0, this.Width, this.Height, 30, 30); // _BoarderRaduis can be adjusted to your needs, try 15 to start.
+                    this.Region = System.Drawing.Region.FromHrgn(ptr);
+                    DeleteObject(ptr);
+                    SetDoubleBuffered(tableLayoutPanel1);
+                    SetDoubleBuffered(tableLayoutPanel5);
+                    SetDoubleBuffered(flowLayoutPanel1);
+                    SetDoubleBuffered(inputpanels);
+                    SetDoubleBuffered(predictionpanels);
+                    SetDoubleBuffered(tableLayoutPanel4);
+                    SetDoubleBuffered(tableLayoutPanel2);
+                    SetDoubleBuffered(Predict);
+                    SetDoubleBuffered(tableLayoutPanel6);
+                    SetDoubleBuffered(tableLayoutPanel7);
+                    SetDoubleBuffered(tableLayoutPanel8);
+                    SetDoubleBuffered(tableLayoutPanel10);
+                    SetDoubleBuffered(tableLayoutPanel9);
+
+                }
+                catch
+                {
+                    Console.WriteLine("ex");
+                }
             }
             catch
             {
-                Console.WriteLine("Parameter is not valid");
+                Console.WriteLine("parameter is not valid");
             }
-           
-
-            try
-            {
-                System.IntPtr ptr = CreateRoundRectRgn(0, 0, this.Width, this.Height, 30, 30); // _BoarderRaduis can be adjusted to your needs, try 15 to start.
-                this.Region = System.Drawing.Region.FromHrgn(ptr);
-                DeleteObject(ptr);
-                SetDoubleBuffered(tableLayoutPanel1);
-                SetDoubleBuffered(tableLayoutPanel5);
-                SetDoubleBuffered(flowLayoutPanel1);
-                SetDoubleBuffered(inputpanels);
-                SetDoubleBuffered(predictionpanels);
-                SetDoubleBuffered(tableLayoutPanel4);
-                SetDoubleBuffered(tableLayoutPanel2);
-                SetDoubleBuffered(Predict);
-                SetDoubleBuffered(tableLayoutPanel6);
-                SetDoubleBuffered(tableLayoutPanel7);
-                SetDoubleBuffered(tableLayoutPanel8);
-                SetDoubleBuffered(tableLayoutPanel10);
-                SetDoubleBuffered(tableLayoutPanel9);
-
-            }
-            catch
-            {
-                Console.WriteLine("ex");
-            }
+            
             
         }
 
@@ -286,120 +293,129 @@ namespace MachineLearningToolv3
             // if()
             try
             {
-                System.GC.Collect();
-                System.GC.WaitForPendingFinalizers();
-               // File.Delete(filepath);
-                string[] pathproject3 = Directory.GetFiles(Application.StartupPath, "*.jpg");
-                foreach (string filename1 in pathproject3)
-                {
-                    System.IO.File.Delete(filename1);
-
-                }
-                string[] pathproject2 = Directory.GetFiles(Application.StartupPath, "*.png");
-                foreach (string filename2 in pathproject2)
-                {
-                    System.IO.File.Delete(filename2);
-
-                }
-            }
-            catch
-            {
-                Console.WriteLine("file not deleted1");
-            }
-            try
-            {
-                System.GC.Collect();
-                System.GC.WaitForPendingFinalizers();
-                System.IO.File.Delete(Application.StartupPath + @"\" + filename);
-                Console.WriteLine(Application.StartupPath + @"\" + filename);
-            }
-            catch
-            {
-                Console.WriteLine("file not deleted2");
-            }
-
-            predictlabel.Text = "";
-            pictest.Image = null;
-            Image img;
-            //datafilename = "";
-            
-            
-            
-            System.Windows.Forms.OpenFileDialog openfiledialog = new System.Windows.Forms.OpenFileDialog();
-            openfiledialog.Filter = "Image Files (*.jpg, *.jpeg, *.png) |*.jpg; *.jpeg; *.png";
-
-            //Console.WriteLine(filename);
-
-
-            if (openfiledialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                if (pictest.Image != null)
-                {
-                    pictest.Image.Dispose();
-                }
-
-                predictlabel.Text = "";
-                pictest.Image = null;
-
-                datafilename = openfiledialog.FileName;
-                filename = openfiledialog.SafeFileName;
-                Console.WriteLine(datafilename);
-                Console.WriteLine(Application.StartupPath + @"\" + filename);
-                var i = Image.FromFile(datafilename);
-                Console.WriteLine(i);
-               
-               // using (var bmpTemp = new Bitmap(i))
-                //{
-                img = new Bitmap(i);
-                //}
-                i.Dispose();
-                i = null;
                 try
                 {
-                    img.Save(Application.StartupPath + @"\" + filename);
-                    
+                    System.GC.Collect();
+                    System.GC.WaitForPendingFinalizers();
+                    // File.Delete(filepath);
+                    string[] pathproject3 = Directory.GetFiles(Application.StartupPath, "*.jpg");
+                    foreach (string filename1 in pathproject3)
+                    {
+                        System.IO.File.Delete(filename1);
+
+                    }
+                    string[] pathproject2 = Directory.GetFiles(Application.StartupPath, "*.png");
+                    foreach (string filename2 in pathproject2)
+                    {
+                        System.IO.File.Delete(filename2);
+
+                    }
                 }
                 catch
                 {
-
+                    Console.WriteLine("file not deleted1");
                 }
-
-                // pictest.Image.Save(Application.StartupPath + @"\" + filename, ImageFormat.Jpeg);
-
-                //System.IO.File.Copy(datafilename, Application.StartupPath + @"\" + filename, true);
-                //pictest.ImageLocation = Application.StartupPath + @"\" + filename;
-                pictest.Image = img;//Image.FromFile(Application.StartupPath + @"\" + filename);
-                //img.Dispose();
-                //Image previousImage = pictest.Image;
-                ////pictest.Image = null;
-                //if (previousImage != null)
-                //{
-                //    previousImage.Dispose();
-                //}
-                
-                Predict.ActiveFillColor = Color.Green;
-                Predict.ActiveLineColor = Color.White;
-                Predict.IdleForecolor = Color.White;
-                Predict.IdleLineColor = Color.White;
-                Predict.IdleFillColor = Color.Green;
-
-                img.Dispose();
-                img = null;
-                openfiledialog.Dispose();
-            }
-            else
-            {
-
-                Predict.ActiveFillColor = SystemColors.ActiveCaption;
-                Predict.ActiveLineColor = Color.White;
-                Predict.IdleForecolor = Color.White;
-                Predict.IdleLineColor = Color.White;
-                Predict.IdleFillColor = SystemColors.ActiveCaption;
+                try
+                {
+                    System.GC.Collect();
+                    System.GC.WaitForPendingFinalizers();
+                    System.IO.File.Delete(Application.StartupPath + @"\" + filename);
+                    Console.WriteLine(Application.StartupPath + @"\" + filename);
+                }
+                catch
+                {
+                    Console.WriteLine("file not deleted2");
+                }
 
                 predictlabel.Text = "";
                 pictest.Image = null;
+                Image img;
+                //datafilename = "";
 
+
+
+                System.Windows.Forms.OpenFileDialog openfiledialog = new System.Windows.Forms.OpenFileDialog();
+                openfiledialog.Filter = "Image Files (*.jpg, *.jpeg, *.png) |*.jpg; *.jpeg; *.png";
+
+                //Console.WriteLine(filename);
+
+
+                if (openfiledialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    if (pictest.Image != null)
+                    {
+                        pictest.Image.Dispose();
+                    }
+
+                    predictlabel.Text = "";
+                    pictest.Image = null;
+
+                    datafilename = openfiledialog.FileName;
+                    filename = openfiledialog.SafeFileName;
+                    Console.WriteLine(datafilename);
+                    Console.WriteLine(Application.StartupPath + @"\" + filename);
+                    var i = Image.FromFile(datafilename);
+                    Console.WriteLine(i);
+
+                    // using (var bmpTemp = new Bitmap(i))
+                    //{
+                    img = new Bitmap(i);
+                    //}
+                    i.Dispose();
+                    i = null;
+                    try
+                    {
+                        img.Save(Application.StartupPath + @"\" + filename);
+
+                    }
+                    catch
+                    {
+
+                    }
+
+                    // pictest.Image.Save(Application.StartupPath + @"\" + filename, ImageFormat.Jpeg);
+
+                    //System.IO.File.Copy(datafilename, Application.StartupPath + @"\" + filename, true);
+                    //pictest.ImageLocation = Application.StartupPath + @"\" + filename;
+                    pictest.Image = img;//Image.FromFile(Application.StartupPath + @"\" + filename);
+                                        //img.Dispose();
+                                        //Image previousImage = pictest.Image;
+                                        ////pictest.Image = null;
+                                        //if (previousImage != null)
+                                        //{
+                                        //    previousImage.Dispose();
+                                        //}
+
+                    Predict.ActiveFillColor = Color.Green;
+                    Predict.ActiveLineColor = Color.White;
+                    Predict.IdleForecolor = Color.White;
+                    Predict.IdleLineColor = Color.White;
+                    Predict.IdleFillColor = Color.Green;
+
+                    img.Dispose();
+                    img = null;
+                    openfiledialog.Dispose();
+                }
+                else
+                {
+
+                    Predict.ActiveFillColor = SystemColors.ActiveCaption;
+                    Predict.ActiveLineColor = Color.White;
+                    Predict.IdleForecolor = Color.White;
+                    Predict.IdleLineColor = Color.White;
+                    Predict.IdleFillColor = SystemColors.ActiveCaption;
+
+                    predictlabel.Text = "";
+                    pictest.Image = null;
+
+                }
             }
+            catch
+            {
+                Console.WriteLine("Parameter is not valid");
+            }
+
+            
 
 
            
@@ -468,118 +484,129 @@ namespace MachineLearningToolv3
 
         private void Predict_Click(object sender, EventArgs e)
         {
-            if(pictest.Image == null)
+
+            try
             {
-                predictlabel.Text = "";
-                //System.IO.File.Delete(Application.StartupPath + @"\" + filename);
-            }
-            else
-            {
-                if (predictlabel.Text != string.Empty)
+                if (pictest.Image == null)
                 {
-                    // MessageBox.Show("Do you want to Test again ?");
-
-                    DialogResult dialogResult = MessageBox.Show("Do you want to Test again ?", "Message", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        Predict.ActiveFillColor = SystemColors.ActiveCaption;
-                        Predict.ActiveLineColor = Color.White;
-                        Predict.IdleForecolor = Color.White;
-                        Predict.IdleLineColor = Color.White;
-                        Predict.IdleFillColor = SystemColors.ActiveCaption;
-
-                        predictlabel.Text = "";
-                        pictest.Image = null;
-                        //confusionmatbox.Image = null;
-                        //traintime.Text = "";
-                    }
-                    else if (dialogResult == DialogResult.No)
-                    {
-                        Console.WriteLine("hehe....No means no");
-                    }
-
-
-
-
-                    return;
+                    predictlabel.Text = "";
+                    //System.IO.File.Delete(Application.StartupPath + @"\" + filename);
                 }
                 else
                 {
-                    if (datafilename == string.Empty)
+                    if (predictlabel.Text != string.Empty)
                     {
-                        MessageBox.Show("Select Input image again");
-                        predictlabel.Text = "";
-                        datafilename = "";
-                        pictest.Image = null;
+                        // MessageBox.Show("Do you want to Test again ?");
+
+                        DialogResult dialogResult = MessageBox.Show("Do you want to Test again ?", "Message", MessageBoxButtons.YesNo);
+                        if (dialogResult == DialogResult.Yes)
+                        {
+                            Predict.ActiveFillColor = SystemColors.ActiveCaption;
+                            Predict.ActiveLineColor = Color.White;
+                            Predict.IdleForecolor = Color.White;
+                            Predict.IdleLineColor = Color.White;
+                            Predict.IdleFillColor = SystemColors.ActiveCaption;
+
+                            predictlabel.Text = "";
+                            pictest.Image = null;
+                            //confusionmatbox.Image = null;
+                            //traintime.Text = "";
+                        }
+                        else if (dialogResult == DialogResult.No)
+                        {
+                            Console.WriteLine("hehe....No means no");
+                        }
+
+
+
+
+                        return;
                     }
                     else
                     {
-
-                        predictlabel.Text = "";
-                        //System.IO.File.Copy(datafilename, Application.StartupPath + @"\test\" + filename, true);
-                        ProcessStartInfo start = new ProcessStartInfo();
-                        start.WindowStyle = ProcessWindowStyle.Hidden;
-                        start.CreateNoWindow = true;
-                        start.UseShellExecute = false;
-                        start.FileName = Environment.SystemDirectory + @"\cmd.exe";
-                        string[] fileEntries = Directory.GetFiles(Application.StartupPath + "/", "*.h5");
-                        Console.WriteLine("%%%%%%%");
-                        Console.WriteLine(fileEntries[0]);
-                        if (fileEntries[0] == Application.StartupPath + "/cnn.h5")
+                        if (datafilename == string.Empty)
                         {
-                            test_cnn();
+                            MessageBox.Show("Select Input image again");
+                            predictlabel.Text = "";
+                            datafilename = "";
+                            pictest.Image = null;
+                        }
+                        else
+                        {
+
+                            predictlabel.Text = "";
+                            //System.IO.File.Copy(datafilename, Application.StartupPath + @"\test\" + filename, true);
+                            ProcessStartInfo start = new ProcessStartInfo();
+                            start.WindowStyle = ProcessWindowStyle.Hidden;
+                            start.CreateNoWindow = true;
+                            start.UseShellExecute = false;
+                            start.FileName = Environment.SystemDirectory + @"\cmd.exe";
+                            string[] fileEntries = Directory.GetFiles(Application.StartupPath + "/", "*.h5");
+                            Console.WriteLine("%%%%%%%");
                             Console.WriteLine(fileEntries[0]);
-                            start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " IC_Test.py");
-                        }
-
-                        start.RedirectStandardOutput = true;
-
-                        using (Process process = Process.Start(start))
-                        {
-                            using (StreamReader reader = process.StandardOutput)
+                            if (fileEntries[0] == Application.StartupPath + "/cnn.h5")
                             {
-                                string result = reader.ReadToEnd();
-                                Console.Write(result);
-                                predictlabel.Text = result;
-                                predictlabel.Font = new System.Drawing.Font("Segoe UI", 15.0F, FontStyle.Bold);
-                                Predict.ActiveFillColor = SystemColors.ActiveCaption;
-                                Predict.ActiveLineColor = Color.White;
-                                Predict.IdleForecolor = Color.White;
-                                Predict.IdleLineColor = Color.White;
-                                Predict.IdleFillColor = SystemColors.ActiveCaption;
-
+                                test_cnn();
+                                Console.WriteLine(fileEntries[0]);
+                                start.Arguments = string.Format(@"/C " + "\"" + MachineLearningToolv3.MLTool.pypath + "\"" + " " + Application.StartupPath +@"/IC_Test.py");
+                                //start.Arguments = string.Format(@"/C " + MachineLearningToolv3.MLTool.pypath + " IC_Test.py");
                             }
-                        }
-                        Console.WriteLine("********Predicted*******");
-                        Console.WriteLine(fileEntries[0]);
-                        try
-                        {
-                            System.IO.File.Delete(Application.StartupPath + @"/IC_Test" + ".py");
-                            string[] pathproject3 = Directory.GetFiles(Application.StartupPath, "*.jpg");
-                            foreach (string filename1 in pathproject3)
+
+                            start.RedirectStandardOutput = true;
+
+                            using (Process process = Process.Start(start))
                             {
-                                System.IO.File.Delete(filename1);
+                                using (StreamReader reader = process.StandardOutput)
+                                {
+                                    string result = reader.ReadToEnd();
+                                    Console.Write(result);
+                                    predictlabel.Text = result;
+                                    predictlabel.Font = new System.Drawing.Font("Segoe UI", 15.0F, FontStyle.Bold);
+                                    Predict.ActiveFillColor = SystemColors.ActiveCaption;
+                                    Predict.ActiveLineColor = Color.White;
+                                    Predict.IdleForecolor = Color.White;
+                                    Predict.IdleLineColor = Color.White;
+                                    Predict.IdleFillColor = SystemColors.ActiveCaption;
 
+                                }
                             }
-                            string[] pathproject2 = Directory.GetFiles(Application.StartupPath, "*.png");
-                            foreach (string filename2 in pathproject2)
+                            Console.WriteLine("********Predicted*******");
+                            Console.WriteLine(fileEntries[0]);
+                            try
                             {
-                                System.IO.File.Delete(filename2);
+                                System.IO.File.Delete(Application.StartupPath + @"/IC_Test" + ".py");
+                                string[] pathproject3 = Directory.GetFiles(Application.StartupPath, "*.jpg");
+                                foreach (string filename1 in pathproject3)
+                                {
+                                    System.IO.File.Delete(filename1);
 
+                                }
+                                string[] pathproject2 = Directory.GetFiles(Application.StartupPath, "*.png");
+                                foreach (string filename2 in pathproject2)
+                                {
+                                    System.IO.File.Delete(filename2);
+
+                                }
+                                // datafilename = "";
+                                System.IO.File.Delete(Application.StartupPath + @"/test.jpg");
+                                //System.IO.File.Delete(Application.StartupPath + @"\" + filename);
                             }
-                           // datafilename = "";
-                            System.IO.File.Delete(Application.StartupPath + @"/test.jpg");
-                            //System.IO.File.Delete(Application.StartupPath + @"\" + filename);
-                        }
-                        catch
-                        {
-                            Console.WriteLine("exception while deleting test script");
+                            catch
+                            {
+                                Console.WriteLine("exception while deleting test script");
+                            }
+
                         }
 
                     }
-
                 }
             }
+            catch
+            {
+                Console.WriteLine("parameter is not valid");
+            }
+
+            
             
             
 

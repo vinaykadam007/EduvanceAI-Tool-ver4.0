@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachineLearningToolv3", "MachineLearningToolv3\MachineLearningToolv3.csproj", "{CBD63332-12C0-4082-A02C-F57B64F5BD3E}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AIToolv3", "AIToolv3\AIToolv3.vdproj", "{AC23DB9D-CCF9-4503-8E0E-9451F889B123}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "EduvanceAI", "EduvanceAI\EduvanceAI.vdproj", "{8E03AF50-04B3-4417-A651-D881D5ECC733}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBD63332-12C0-4082-A02C-F57B64F5BD3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD63332-12C0-4082-A02C-F57B64F5BD3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD63332-12C0-4082-A02C-F57B64F5BD3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD63332-12C0-4082-A02C-F57B64F5BD3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC23DB9D-CCF9-4503-8E0E-9451F889B123}.Debug|Any CPU.ActiveCfg = Debug
+		{AC23DB9D-CCF9-4503-8E0E-9451F889B123}.Release|Any CPU.ActiveCfg = Release
+		{8E03AF50-04B3-4417-A651-D881D5ECC733}.Debug|Any CPU.ActiveCfg = Debug
+		{8E03AF50-04B3-4417-A651-D881D5ECC733}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37C7640D-5505-4AF6-98A1-13CF9647690F}
+	EndGlobalSection
+EndGlobal

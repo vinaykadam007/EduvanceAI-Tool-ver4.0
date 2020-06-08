@@ -45,7 +45,6 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
             this.output_panel1 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
@@ -116,6 +115,8 @@
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.logout_panel = new System.Windows.Forms.Panel();
+            this.logoutbutton = new Bunifu.Framework.UI.BunifuThinButton2();
             this.maintablelayout.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -159,6 +160,7 @@
             this.tableLayoutPanel29.SuspendLayout();
             this.logo_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            this.logout_panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // maintablelayout
@@ -168,23 +170,25 @@
             this.maintablelayout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.maintablelayout.ColumnCount = 5;
             this.maintablelayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.maintablelayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.07341F));
-            this.maintablelayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.59326F));
-            this.maintablelayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33272F));
-            this.maintablelayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
+            this.maintablelayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.12511F));
+            this.maintablelayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 31.18106F));
+            this.maintablelayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.69382F));
+            this.maintablelayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 79F));
             this.maintablelayout.Controls.Add(this.flowLayoutPanel1, 1, 1);
             this.maintablelayout.Controls.Add(this.flowLayoutPanel2, 2, 1);
             this.maintablelayout.Controls.Add(this.flowLayoutPanel3, 3, 1);
             this.maintablelayout.Controls.Add(this.logo_panel, 3, 2);
+            this.maintablelayout.Controls.Add(this.logout_panel, 3, 0);
             this.maintablelayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.maintablelayout.Location = new System.Drawing.Point(0, 0);
             this.maintablelayout.Name = "maintablelayout";
             this.maintablelayout.RowCount = 3;
-            this.maintablelayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.maintablelayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 882F));
-            this.maintablelayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.maintablelayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.maintablelayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 852F));
+            this.maintablelayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.maintablelayout.Size = new System.Drawing.Size(1924, 927);
             this.maintablelayout.TabIndex = 0;
+            this.maintablelayout.Paint += new System.Windows.Forms.PaintEventHandler(this.maintablelayout_Paint);
             // 
             // flowLayoutPanel1
             // 
@@ -194,14 +198,13 @@
             this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel4);
             this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel11);
             this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel6);
-            this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel7);
             this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel12);
             this.flowLayoutPanel1.Controls.Add(this.tableLayoutPanel8);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(58, 8);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(58, 40);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(568, 876);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(568, 846);
             this.flowLayoutPanel1.TabIndex = 3;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
@@ -421,18 +424,6 @@
             this.output_panel1.VisibleChanged += new System.EventHandler(this.output_panel1_VisibleChanged);
             this.output_panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.output_panel1_Paint);
             // 
-            // tableLayoutPanel7
-            // 
-            this.tableLayoutPanel7.BackColor = System.Drawing.Color.Transparent;
-            this.tableLayoutPanel7.ColumnCount = 1;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 676);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 1;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.8642F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(562, 13);
-            this.tableLayoutPanel7.TabIndex = 33;
-            // 
             // tableLayoutPanel12
             // 
             this.tableLayoutPanel12.BackColor = System.Drawing.Color.Transparent;
@@ -440,12 +431,12 @@
             this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel12.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel12.Controls.Add(this.bunifuSlider1, 0, 1);
-            this.tableLayoutPanel12.Location = new System.Drawing.Point(7, 695);
+            this.tableLayoutPanel12.Location = new System.Drawing.Point(7, 676);
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             this.tableLayoutPanel12.RowCount = 2;
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.8642F));
             this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(558, 94);
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(558, 92);
             this.tableLayoutPanel12.TabIndex = 13;
             // 
             // panel1
@@ -457,7 +448,7 @@
             this.panel1.Controls.Add(this.label20);
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(516, 46);
+            this.panel1.Size = new System.Drawing.Size(516, 44);
             this.panel1.TabIndex = 33;
             // 
             // label8
@@ -467,7 +458,7 @@
             this.label8.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.label8.Location = new System.Drawing.Point(245, -8);
+            this.label8.Location = new System.Drawing.Point(245, -7);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(64, 43);
             this.label8.TabIndex = 31;
@@ -481,7 +472,7 @@
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.ForeColor = System.Drawing.Color.White;
-            this.label21.Location = new System.Drawing.Point(418, 20);
+            this.label21.Location = new System.Drawing.Point(418, 19);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(57, 33);
             this.label21.TabIndex = 41;
@@ -495,7 +486,7 @@
             this.test.AutoSize = true;
             this.test.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.test.ForeColor = System.Drawing.Color.White;
-            this.test.Location = new System.Drawing.Point(92, 20);
+            this.test.Location = new System.Drawing.Point(92, 19);
             this.test.Name = "test";
             this.test.Size = new System.Drawing.Size(29, 33);
             this.test.TabIndex = 35;
@@ -509,7 +500,7 @@
             this.train.AutoSize = true;
             this.train.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.train.ForeColor = System.Drawing.Color.White;
-            this.train.Location = new System.Drawing.Point(479, 21);
+            this.train.Location = new System.Drawing.Point(479, 19);
             this.train.Name = "train";
             this.train.Size = new System.Drawing.Size(29, 33);
             this.train.TabIndex = 39;
@@ -537,7 +528,7 @@
             this.bunifuSlider1.BackgroudColor = System.Drawing.Color.DarkGray;
             this.bunifuSlider1.BorderRadius = 0;
             this.bunifuSlider1.IndicatorColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(70)))), ((int)(((byte)(107)))));
-            this.bunifuSlider1.Location = new System.Drawing.Point(50, 56);
+            this.bunifuSlider1.Location = new System.Drawing.Point(50, 54);
             this.bunifuSlider1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.bunifuSlider1.MaximumValue = 100;
             this.bunifuSlider1.Name = "bunifuSlider1";
@@ -554,12 +545,12 @@
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel8.Controls.Add(this.bunifuSlider2, 0, 0);
             this.tableLayoutPanel8.Controls.Add(this.panel2, 0, 1);
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(7, 795);
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(7, 774);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 2;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(558, 85);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(558, 72);
             this.tableLayoutPanel8.TabIndex = 33;
             // 
             // bunifuSlider2
@@ -569,7 +560,7 @@
             this.bunifuSlider2.BackgroudColor = System.Drawing.Color.DarkGray;
             this.bunifuSlider2.BorderRadius = 0;
             this.bunifuSlider2.IndicatorColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(70)))), ((int)(((byte)(107)))));
-            this.bunifuSlider2.Location = new System.Drawing.Point(50, 10);
+            this.bunifuSlider2.Location = new System.Drawing.Point(50, 4);
             this.bunifuSlider2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.bunifuSlider2.MaximumValue = 100;
             this.bunifuSlider2.Name = "bunifuSlider2";
@@ -583,7 +574,7 @@
             // 
             this.panel2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel2.Controls.Add(this.label22);
-            this.panel2.Location = new System.Drawing.Point(132, 52);
+            this.panel2.Location = new System.Drawing.Point(132, 39);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(293, 30);
             this.panel2.TabIndex = 43;
@@ -622,9 +613,9 @@
             this.flowLayoutPanel2.Controls.Add(this.tableLayoutPanel23);
             this.flowLayoutPanel2.Controls.Add(this.tableLayoutPanel27);
             this.flowLayoutPanel2.Controls.Add(this.tableLayoutPanel28);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(701, 8);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(688, 40);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(544, 876);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(548, 846);
             this.flowLayoutPanel2.TabIndex = 4;
             this.flowLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel2_Paint_1);
             // 
@@ -1125,7 +1116,7 @@
             this.tableLayoutPanel27.Name = "tableLayoutPanel27";
             this.tableLayoutPanel27.RowCount = 1;
             this.tableLayoutPanel27.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.8642F));
-            this.tableLayoutPanel27.Size = new System.Drawing.Size(541, 18);
+            this.tableLayoutPanel27.Size = new System.Drawing.Size(541, 10);
             this.tableLayoutPanel27.TabIndex = 55;
             // 
             // tableLayoutPanel28
@@ -1134,7 +1125,7 @@
             this.tableLayoutPanel28.ColumnCount = 1;
             this.tableLayoutPanel28.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel28.Controls.Add(this.run, 0, 0);
-            this.tableLayoutPanel28.Location = new System.Drawing.Point(3, 767);
+            this.tableLayoutPanel28.Location = new System.Drawing.Point(3, 759);
             this.tableLayoutPanel28.Name = "tableLayoutPanel28";
             this.tableLayoutPanel28.RowCount = 1;
             this.tableLayoutPanel28.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.8642F));
@@ -1177,9 +1168,9 @@
             this.flowLayoutPanel3.Controls.Add(this.tableLayoutPanel29);
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Right;
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(1329, 8);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(1314, 40);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(527, 876);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(527, 846);
             this.flowLayoutPanel3.TabIndex = 5;
             this.flowLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel3_Paint);
             // 
@@ -1335,7 +1326,7 @@
             this.tableLayoutPanel26.Name = "tableLayoutPanel26";
             this.tableLayoutPanel26.RowCount = 1;
             this.tableLayoutPanel26.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.8642F));
-            this.tableLayoutPanel26.Size = new System.Drawing.Size(521, 32);
+            this.tableLayoutPanel26.Size = new System.Drawing.Size(521, 24);
             this.tableLayoutPanel26.TabIndex = 42;
             // 
             // tableLayoutPanel29
@@ -1347,11 +1338,11 @@
             this.tableLayoutPanel29.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 11F));
             this.tableLayoutPanel29.Controls.Add(this.bunifuThinButton22, 1, 0);
             this.tableLayoutPanel29.Controls.Add(this.Test_Button, 0, 0);
-            this.tableLayoutPanel29.Location = new System.Drawing.Point(3, 767);
+            this.tableLayoutPanel29.Location = new System.Drawing.Point(21, 759);
             this.tableLayoutPanel29.Name = "tableLayoutPanel29";
             this.tableLayoutPanel29.RowCount = 1;
             this.tableLayoutPanel29.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.8642F));
-            this.tableLayoutPanel29.Size = new System.Drawing.Size(521, 86);
+            this.tableLayoutPanel29.Size = new System.Drawing.Size(503, 86);
             this.tableLayoutPanel29.TabIndex = 56;
             // 
             // bunifuThinButton22
@@ -1373,7 +1364,7 @@
             this.bunifuThinButton22.IdleFillColor = System.Drawing.SystemColors.ActiveCaption;
             this.bunifuThinButton22.IdleForecolor = System.Drawing.Color.White;
             this.bunifuThinButton22.IdleLineColor = System.Drawing.Color.White;
-            this.bunifuThinButton22.Location = new System.Drawing.Point(515, 5);
+            this.bunifuThinButton22.Location = new System.Drawing.Point(497, 5);
             this.bunifuThinButton22.Margin = new System.Windows.Forms.Padding(5);
             this.bunifuThinButton22.Name = "bunifuThinButton22";
             this.bunifuThinButton22.Size = new System.Drawing.Size(1, 76);
@@ -1400,7 +1391,7 @@
             this.Test_Button.IdleFillColor = System.Drawing.SystemColors.ActiveCaption;
             this.Test_Button.IdleForecolor = System.Drawing.Color.White;
             this.Test_Button.IdleLineColor = System.Drawing.Color.White;
-            this.Test_Button.Location = new System.Drawing.Point(145, 5);
+            this.Test_Button.Location = new System.Drawing.Point(136, 5);
             this.Test_Button.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Test_Button.Name = "Test_Button";
             this.Test_Button.Size = new System.Drawing.Size(219, 76);
@@ -1410,36 +1401,36 @@
             // 
             // logo_panel
             // 
-            this.logo_panel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.logo_panel.Controls.Add(this.label24);
             this.logo_panel.Controls.Add(this.label23);
             this.logo_panel.Controls.Add(this.pictureBox9);
-            this.logo_panel.Location = new System.Drawing.Point(1477, 890);
+            this.logo_panel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.logo_panel.Location = new System.Drawing.Point(1462, 892);
             this.logo_panel.Name = "logo_panel";
-            this.logo_panel.Size = new System.Drawing.Size(379, 34);
+            this.logo_panel.Size = new System.Drawing.Size(379, 32);
             this.logo_panel.TabIndex = 33;
             // 
             // label24
             // 
-            this.label24.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label24.ForeColor = System.Drawing.Color.White;
-            this.label24.Location = new System.Drawing.Point(56, 8);
+            this.label24.Location = new System.Drawing.Point(47, -5);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(92, 28);
+            this.label24.Size = new System.Drawing.Size(105, 28);
             this.label24.TabIndex = 34;
-            this.label24.Text = "Version 4.0";
+            this.label24.Text = "Version 4.0.1";
             this.label24.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.label24.UseCompatibleTextRendering = true;
             // 
             // label23
             // 
-            this.label23.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label23.ForeColor = System.Drawing.Color.White;
-            this.label23.Location = new System.Drawing.Point(152, 8);
+            this.label23.Location = new System.Drawing.Point(152, -4);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(90, 28);
             this.label23.TabIndex = 33;
@@ -1452,12 +1443,48 @@
             this.pictureBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox9.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
-            this.pictureBox9.Location = new System.Drawing.Point(247, 2);
+            this.pictureBox9.Location = new System.Drawing.Point(247, -4);
             this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(129, 34);
+            this.pictureBox9.Size = new System.Drawing.Size(129, 32);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox9.TabIndex = 32;
             this.pictureBox9.TabStop = false;
+            // 
+            // logout_panel
+            // 
+            this.logout_panel.Controls.Add(this.logoutbutton);
+            this.logout_panel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.logout_panel.Location = new System.Drawing.Point(1652, 3);
+            this.logout_panel.Name = "logout_panel";
+            this.logout_panel.Size = new System.Drawing.Size(189, 31);
+            this.logout_panel.TabIndex = 36;
+            // 
+            // logoutbutton
+            // 
+            this.logoutbutton.ActiveBorderThickness = 2;
+            this.logoutbutton.ActiveCornerRadius = 15;
+            this.logoutbutton.ActiveFillColor = System.Drawing.SystemColors.ActiveCaption;
+            this.logoutbutton.ActiveForecolor = System.Drawing.Color.White;
+            this.logoutbutton.ActiveLineColor = System.Drawing.Color.White;
+            this.logoutbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.logoutbutton.BackColor = System.Drawing.Color.Transparent;
+            this.logoutbutton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("logoutbutton.BackgroundImage")));
+            this.logoutbutton.ButtonText = "Logout";
+            this.logoutbutton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.logoutbutton.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logoutbutton.ForeColor = System.Drawing.Color.Black;
+            this.logoutbutton.IdleBorderThickness = 2;
+            this.logoutbutton.IdleCornerRadius = 15;
+            this.logoutbutton.IdleFillColor = System.Drawing.SystemColors.ActiveCaption;
+            this.logoutbutton.IdleForecolor = System.Drawing.Color.White;
+            this.logoutbutton.IdleLineColor = System.Drawing.Color.White;
+            this.logoutbutton.Location = new System.Drawing.Point(72, -6);
+            this.logoutbutton.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.logoutbutton.Name = "logoutbutton";
+            this.logoutbutton.Size = new System.Drawing.Size(104, 42);
+            this.logoutbutton.TabIndex = 34;
+            this.logoutbutton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.logoutbutton.Click += new System.EventHandler(this.logoutbutton_Click_1);
             // 
             // MLTool
             // 
@@ -1471,11 +1498,13 @@
             this.ClientSize = new System.Drawing.Size(1924, 927);
             this.Controls.Add(this.maintablelayout);
             this.DoubleBuffered = true;
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MLTool";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EduvanceAI Tool - Premium Version";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MLTool_FormClosing);
             this.Load += new System.EventHandler(this.MLTool_Load);
             this.maintablelayout.ResumeLayout(false);
             this.maintablelayout.PerformLayout();
@@ -1540,6 +1569,7 @@
             this.logo_panel.ResumeLayout(false);
             this.logo_panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            this.logout_panel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1627,12 +1657,13 @@
         private Bunifu.Framework.UI.BunifuSlider bunifuSlider2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel28;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel29;
         private System.Windows.Forms.Panel logo_panel;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Panel logout_panel;
+        private Bunifu.Framework.UI.BunifuThinButton2 logoutbutton;
         //private Bunifu.Framework.UI.BunifuCustomLabel bunifuCustomLabel1;
     }
 }
