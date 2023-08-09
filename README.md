@@ -10,6 +10,11 @@ Website: http://eduvance.in
 ## Description:
 Welcome to the EduvanceAI Tool repository! This project showcases an innovative Windows desktop application designed and developed in C# (WPF). The tool is aimed at simplifying machine learning experimentation by providing a user-friendly interface for applying various machine learning algorithms to regression, classification, and image recognition problems. The tool offers different levels of complexity – Basic, Intermediate, and Advanced – to cater to users with varying levels of programming and machine learning expertise.
 
+
+## Demo (Classification example):
+https://github.com/vinaykadam007/EduvanceAI-Tool-ver4.0/assets/39087585/e20bb62c-cbad-43e0-ba41-bd5f0dd396df
+
+
 ## Features:
 - User-friendly Windows desktop application
 - Integration of machine learning algorithms for regression and classification
